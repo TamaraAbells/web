@@ -18,15 +18,16 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { validateAccountName } from 'utils/helpers/accountName';
 
 const FormItem = Form.Item;
-const PIN_VALID_SECONDS = 180
+const PIN_VALID_SECONDS = 180;
 
 class SignUp extends Component {
   state = {
     pageTitle: 'Create Account',
     stage: 0,
-    accountCheck: null,
-    accountCheckMsg: null,
+    accountStatus: null,
     accountName: null,
+    referrerStatus: null,
+    referrerName: null,
     phoneCheck: false,
     phoneNumber: '',
     pinSent: false,
@@ -42,31 +43,58 @@ class SignUp extends Component {
   checkAccount = (_, value, callback) => {
     const msg = validateAccountName(value);
     if (msg !== null) {
-      this.setState({ accountCheck: 'error', accountCheckMsg: msg });
-      return callback();
+      return this.setState({ accountStatus: 'error' }, () => callback(msg));
     }
 
-    this.setState({ accountName: null, accountCheck: 'loading', accountCheckMsg: 'Checking the server ...' }, () => {
+    this.setState({ accountName: null, accountStatus: 'validating' }, () => {
       try {
         steem.api.lookupAccountNames([value], (err, result) => {
-          if (this.state.accountCheck === 'error') { // Another validation has ran and validation has failed
-            return callback();
-          }
           if (err || !result) {
-            console.error(err, result);
-            return callback('Service is temporarily unavailable, Please try again later.');
+            return this.setState({ accountStatus: 'error' }, () => callback('Service is temporarily unavailable, Please try again later.'));
           }
 
           if (result[0] !== null) {
-            this.setState({ accountCheck: false, accountCheckMsg: 'This username is already in use.' }, () => { return callback(); });
+            return this.setState({ accountStatus: 'error' }, () => callback('This username is already in use.'));
           } else {
-            this.setState({ accountName: value, accountCheck: 'validated', accountCheckMsg: <div>The username <b>{value}</b> is available.</div> }, () => { return callback(); });
+            return this.setState({
+              accountName: value,
+              accountStatus: 'success'
+            }, () => callback(<div>The username <b>{value}</b> is available.</div>));
           }
-          return callback();
         });
       } catch (error) {
-        return callback('Service is temporarily unavailable, Please try again later.');
+        return this.setState({ accountStatus: 'error' }, () => callback('Service is temporarily unavailable, Please try again later.'));
       }
+    });
+  };
+
+  checkReferrer = (_, value, callback) => {
+    if (!value) { // Allow empty
+      return this.setState({ referrerName: null, referrerStatus: 'success' }, callback);
+    }
+
+    const msg = validateAccountName(value);
+    if (msg !== null) {
+      return this.setState({ referrerName: null, referrerStatus: 'error' }, () => callback(msg));
+    }
+
+    if (this.state.accountName === value) {
+      return this.setState({ referrerName: null, referrerStatus: 'error' }, () => callback('You cannot set yourself as a referrer'));
+    }
+
+    this.setState({ referrerName: null, referrerStatus: 'validating' }, () => {
+      api.get('/users/exists.json', { username: value }).then((res) => {
+        if (res.result) {
+          return this.setState({
+            referrerName: value,
+            referrerStatus: 'success',
+          }, () => callback());
+        } else {
+          return this.setState({
+            referrerStatus: 'error'
+          }, () => callback(<div><b>{value}</b> is not a Steemhunt user.</div>));
+        }
+      }).catch((e) => callback(e.message));
     });
   };
 
@@ -80,7 +108,15 @@ class SignUp extends Component {
 
   submitAccount = (e) => {
     e.preventDefault();
-    if (this.state.accountCheck === 'validated' && this.state.accountName !== null) {
+    if (this.state.accountStatus === 'success' && this.state.accountName !== null) {
+      this.moveStage(1);
+    }
+  };
+
+  submitReferrer = (e) => {
+    e.preventDefault();
+
+    if (this.state.referrerStatus === 'success') {
       this.moveStage(1);
     }
   };
@@ -114,16 +150,6 @@ class SignUp extends Component {
         console.error('Unsupported response', res);
       }
     }).catch((e) => notification['error']({ message: e.message }));
-  };
-
-  validateStatus = (status) => {
-    if (status === null) {
-      return '';
-    }
-    if (status === 'loading') {
-      return 'validating';
-    }
-    return status === 'validated' ? "success" : "error"
   };
 
   moveStage = (by) => {
@@ -169,6 +195,7 @@ class SignUp extends Component {
         sign_up: {
           keys: this.state.keys,
           username: this.state.accountName,
+          referrer: this.state.referrerName,
           phone_number: formatNumber(this.state.phoneNumber, 'International')
         }
       }).then((res) => {
@@ -202,8 +229,7 @@ class SignUp extends Component {
             </p>
             <Form onSubmit={this.submitAccount}>
               <FormItem
-                validateStatus={this.validateStatus(this.state.accountCheck)}
-                help={this.state.accountCheckMsg}
+                validateStatus={this.state.accountStatus}
                 hasFeedback
               >
                 {getFieldDecorator('userName', {
@@ -216,7 +242,7 @@ class SignUp extends Component {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  disabled={this.state.accountCheck !== 'validated'}
+                  disabled={this.state.accountStatus !== 'success'}
                   onClick={() => window.gtag('event', 'signup_process', { 'event_category' : 'signup', 'event_label' : 'ID Verified' })}
                   block
                 >
@@ -326,6 +352,49 @@ class SignUp extends Component {
         break;
       case 4:
         form = (
+          <div key={0} className="form-container">
+            <img src={userImage} alt="Steem User" />
+            <p>
+              If you know the referrer's username, please enter it below:
+            </p>
+            <Form onSubmit={this.submitReferrer}>
+              <FormItem
+                validateStatus={this.state.referrerStatus}
+                hasFeedback
+              >
+                {getFieldDecorator('userName', {
+                  rules: [{ required: false, message: null, validator: this.checkReferrer }],
+                })(
+                  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" autoFocus />
+                )}
+              </FormItem>
+              <div className="actions-container">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  disabled={this.state.referrerStatus !== 'success' || !this.state.referrerName}
+                  onClick={() => window.gtag('event', 'signup_process', { 'event_category' : 'signup', 'event_label' : 'Referrer Verified' })}
+                  block
+                >
+                  Continue
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    window.gtag('event', 'signup_process', { 'event_category' : 'signup', 'event_label' : 'Referrer Skip' });
+                    this.moveStage(1);
+                  }}
+                  block
+                >
+                  Skip
+                </Button>
+              </div>
+            </Form>
+          </div>
+        )
+        break;
+      case 5:
+        form = (
           <div key={4} className="form-container">
             <img src={keyImage} alt="Pin Verified" />
             <p>
@@ -353,9 +422,9 @@ class SignUp extends Component {
           </div>
         )
         break;
-      case 5:
+      case 6:
         form = (
-          <div key={5} className="form-container">
+          <div key={6} className="form-container">
             <p>
               Now you can use Steemhunt and other Steem apps via SteemConnect, a secure way to login without giving up your private keys (password).
             </p>
