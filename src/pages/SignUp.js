@@ -355,7 +355,7 @@ class SignUp extends Component {
           <div key={0} className="form-container">
             <img src={userImage} alt="Steem User" />
             <p>
-              If you know the referrer's username, please enter it below:
+              If you know the referrer&apos;s username, please enter it below:
             </p>
             <Form onSubmit={this.submitReferrer}>
               <FormItem
