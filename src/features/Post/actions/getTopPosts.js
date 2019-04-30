@@ -9,8 +9,8 @@ const GET_TOP_POSTS_SUCCESS = 'GET_TOP_POSTS_SUCCESS';
 const GET_TOP_POSTS_FAILURE = 'GET_TOP_POSTS_FAILURE';
 
 /*--------- ACTIONS ---------*/
-export function getTopPostsBegin(period, page) {
-  return { type: GET_TOP_POSTS_BEGIN, period, page };
+export function getTopPostsBegin(period, tags, page) {
+  return { type: GET_TOP_POSTS_BEGIN, period, tags, page };
 }
 
 export function getTopPostsSuccess(period, page, result) {
@@ -88,9 +88,9 @@ export function getTopPostsReducer(state, action) {
 }
 
 /*--------- SAGAS ---------*/
-function* getTopPosts({ period, page }) {
+function* getTopPosts({ period, tags, page }) {
   try {
-    const result = yield api.get(`/posts/top.json`, { period: period, page: page, sort: 'hunt_score' });
+    const result = yield api.get(`/posts/top.json`, { period: period, tags: tags, page: page, sort: 'hunt_score' });
 
     yield put(getTopPostsSuccess(period, page, result));
   } catch(e) {

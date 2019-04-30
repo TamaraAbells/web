@@ -16,13 +16,14 @@ import parrot from 'assets/images/parrot.gif';
 class PostItem extends Component {
   static propTypes = {
     pathPrefix: PropTypes.string,
+    query: PropTypes.string,
     rank: PropTypes.number.isRequired,
     post: PropTypes.object.isRequired,
     lazyLoad: PropTypes.bool.isRequired,
   };
 
   render() {
-    const { me, rank, post, pathPrefix, lazyLoad } = this.props;
+    const { me, rank, post, pathPrefix, query, lazyLoad } = this.props;
     // const activeVotes = post.active_votes.filter(v => v.percent !== 0).length;
     let image;
 
@@ -41,7 +42,7 @@ class PostItem extends Component {
     return (
       <div className={`post${rank === 1 ? ' top-border' : ''}${post.is_active ? '' : ' faded'}`}>
         <div className="rank">{rank}</div>
-        <Link to={getPostPath(post, pathPrefix)}>
+        <Link to={getPostPath(post, pathPrefix, query)}>
           {lazyLoad ?
             <LazyLoad height={0} offset={500} once={true} scroll={false} overflow={true}>{image}</LazyLoad>
           :
@@ -50,7 +51,7 @@ class PostItem extends Component {
         </Link>
         <div className="summary">
           <div className="title">
-            <Link to={getPostPath(post, pathPrefix)}>
+            <Link to={getPostPath(post, pathPrefix, query)}>
               {titleize(post.title)}
               {hasBoosted(post) && <img src={parrot} alt="I ♥ HUNT" title="I ♥ HUNT" className="party" />}
             </Link>

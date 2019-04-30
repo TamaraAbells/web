@@ -155,7 +155,6 @@ class PostView extends Component {
       }
     });
     const tags = post.tags.map((tag, index) => {
-      // TODO: To steemhunt tags
       return (
         <Tag key={index}><Link to={getTagPath(tag)}>{tag}</Link></Tag>
       );
