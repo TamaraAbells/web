@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 import { Helmet } from 'react-helmet';
+import { Icon } from 'antd'
 import { selectAppProps } from './selectors';
 import { getAppConfigBegin } from './actions/getAppConfig';
 import { RoutesLeft, RoutesRight } from 'Routes';
@@ -19,7 +20,8 @@ class App extends Component {
     super(props);
     this.params = new URLSearchParams(this.props.location.search);
     this.state = {
-      showBanner: this.params.get('ref') !== null
+      showBanner: this.params.get('ref') !== null,
+      showOtherBanner: localStorage.getItem('hideOtherBanner') !== 'true',
     }
   }
 
@@ -29,10 +31,13 @@ class App extends Component {
     }
   }
 
-  setBannerState = async (showBanner) => await this.setState({ showBanner });
+  setBannerState = (showBanner) => this.setState({ showBanner });
+  hideOtherBanner = () => {
+    this.setState({ showOtherBanner: false }, () => localStorage.setItem('hideOtherBanner', 'true'));
+  }
 
   render() {
-    const { showBanner } = this.state;
+    const { showBanner, showOtherBanner } = this.state;
 
     return (
       <div id="app-container" className="app-container">
@@ -62,7 +67,18 @@ class App extends Component {
         </Helmet>
         {this.params.get('ref') && showBanner && <Referral params={this.params} pathname={this.props.location.pathname} setBannerState={this.setBannerState} />}
 
-        <div className={`split-container${this.params.get('ref') && this.state.showBanner ? ' with-banner' : ''}`}>
+        {showOtherBanner &&
+          <div className="top-banner-bar">
+            <Link to="/about">
+              Reviewhunt pre sign-up is live now! <Icon type="right-circle-o" />
+            </Link>
+            <span onClick={this.hideOtherBanner} alt="Close banner">
+              <Icon type="close-circle-o" />
+            </span>
+          </div>
+        }
+
+        <div className={`split-container${(this.params.get('ref') && showBanner) || showOtherBanner ? ' with-banner' : ''}`}>
           <RoutesLeft />
           <RoutesRight />
         </div>

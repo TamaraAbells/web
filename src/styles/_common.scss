@@ -172,6 +172,10 @@ hr {
     align-items: center;
     background: #333;
   }
+
+  @include responsive(tiny) {
+    font-size: 0.875rem;
+  }
 }
 
 .with-banner {
@@ -231,25 +235,21 @@ hr {
         left: 0;
       }
 
-      .back-button {
+      .back-button, .back-logo {
         display: block;
         position: absolute;
-        left: 14px;
-        top: 1rem;
+        left: 0.75rem;
+        top: 1.3rem;
         color: #fff;
-        font-size: 2rem;
+        font-size: 1.65rem;
         z-index: 150;
+      }
+
+      .back-button {
         text-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
       }
 
       .back-logo {
-        display: block;
-        position: absolute;
-        left: 14px;
-        top: 1rem;
-        color: #fff;
-        font-size: 2rem;
-        z-index: 150;
         width: 31px;
         height: 45px;
         margin-top: 3px;
