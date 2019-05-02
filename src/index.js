@@ -1,5 +1,3 @@
-require('./utils/polyfill');
-
 import bugsnag from 'bugsnag-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -11,6 +9,7 @@ import './utils/helpers/immutabilityHelpers';
 import store from './store';
 import App from './features/App/App';
 import createPlugin from 'bugsnag-react';
+require('./utils/polyfill');
 
 const bugsnagClient = bugsnag(process.env.REACT_APP_BUGSNAG_KEY);
 const ErrorBoundary = bugsnagClient.use(createPlugin(React));
