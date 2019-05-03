@@ -137,8 +137,19 @@ if (!Array.prototype.fill) {
   });
 }
 
-if (!('localStorage' in window)) {
-  window.localStorage = {
+var hasStoragePermission = (function() {
+  try {
+    localStorage.setItem('test', 'test');
+    localStorage.removeItem('test');
+    return true;
+  } catch (exception) {
+    return false;
+  }
+}());
+if (('localStorage' in window) && hasStoragePermission) {
+  window.safeStorage = window.localStorage;
+} else {
+  window.safeStorage = {
     _data       : {},
     setItem     : function(id, val) { return this._data[id] = String(val); },
     getItem     : function(id) { return this._data.hasOwnProperty(id) ? this._data[id] : undefined; },

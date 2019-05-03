@@ -69,14 +69,14 @@ class VoteButton extends PureComponent {
       }
 
       // Load the last percentage
-      const voteString = localStorage.getItem(`vote-weight-${this.props.type}`);
+      const voteString = window.safeStorage.getItem(`vote-weight-${this.props.type}`);
       const voteWeight = parseInt(voteString, 10);
       if (voteString && voteWeight) {
         this.setState({ voteWeight: voteWeight });
       }
     } else {
       // Save the last percentage
-      localStorage.setItem(`vote-weight-${this.props.type}`, this.state.voteWeight);
+      window.safeStorage.setItem(`vote-weight-${this.props.type}`, this.state.voteWeight);
     }
 
     this.setState({ sliderOpened: visible });

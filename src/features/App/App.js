@@ -21,7 +21,7 @@ class App extends Component {
     this.params = new URLSearchParams(this.props.location.search);
     this.state = {
       showBanner: this.params.get('ref') !== null,
-      showOtherBanner: localStorage.getItem('hideOtherBanner') !== 'true',
+      showOtherBanner: window.safeStorage.getItem('hideOtherBanner') !== 'true',
     }
   }
 
@@ -33,7 +33,7 @@ class App extends Component {
 
   setBannerState = (showBanner) => this.setState({ showBanner });
   hideOtherBanner = () => {
-    this.setState({ showOtherBanner: false }, () => localStorage.setItem('hideOtherBanner', 'true'));
+    this.setState({ showOtherBanner: false }, () => window.safeStorage.setItem('hideOtherBanner', 'true'));
   }
 
   render() {

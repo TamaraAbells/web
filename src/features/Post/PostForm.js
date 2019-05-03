@@ -32,7 +32,7 @@ class PostForm extends Component {
   };
 
   shouldConvertHunt() {
-    return localStorage.getItem('shouldConvertHunt') === 'true'
+    return window.safeStorage.getItem('shouldConvertHunt') === 'true'
   }
 
   constructor(props) {
@@ -55,14 +55,14 @@ class PostForm extends Component {
 
   componentDidMount() {
     const { match: { params: { author, permlink } }, getPost, updateDraft, location } = this.props;
-    const draftString = localStorage.getItem('draft');
+    const draftString = window.safeStorage.getItem('draft');
 
     // Edit mode
     if (author && permlink) {
       if (!!draftString) {
         let draft = JSON.parse(draftString);
         if (author === draft.author && permlink === draft.permlink) {
-          // if there is saved localStorage
+          // if there is saved window.safeStorage
           updateDraft('url', draft.url);
           updateDraft('title', draft.title);
           updateDraft('tagline', draft.tagline);
@@ -86,12 +86,12 @@ class PostForm extends Component {
 
       // Fresh new post
     } else if (!draftString) {
-      // if localStorage does not exist
+      // if window.safeStorage does not exist
       this.checkAndResetDraft();
 
     // New post with draft
     } else {
-      // if there is saved localStorage
+      // if there is saved window.safeStorage
       let draft = JSON.parse(draftString);
       updateDraft('url', draft.url || '#');
       updateDraft('title', draft.title || 'Title');
@@ -138,7 +138,7 @@ class PostForm extends Component {
 
     if (author && permlink) {
       this.props.resetDraft();
-      localStorage.removeItem('draft');
+      window.safeStorage.removeItem('draft');
     } else {
       this.checkAndResetDraft();
     }
@@ -163,8 +163,8 @@ class PostForm extends Component {
     } else {
       if (author && permlink) {
         this.props.resetDraft();
-        localStorage.removeItem('draft');
-      } else if (!localStorage.getItem('draft')) {
+        window.safeStorage.removeItem('draft');
+      } else if (!window.safeStorage.getItem('draft')) {
         this.setState({ editMode: false });
         this.checkAndResetDraft();
       }
@@ -190,8 +190,8 @@ class PostForm extends Component {
     // TODO: FIXME: HACK:
     // Should be a proper reducer callback
     setTimeout(() => {
-      // Save into localStorage
-      localStorage.setItem('draft', JSON.stringify(this.props.draft));
+      // Save into window.safeStorage
+      window.safeStorage.setItem('draft', JSON.stringify(this.props.draft));
     });
   }
 
@@ -327,7 +327,7 @@ class PostForm extends Component {
       beneficiaries.push({ account: 'steemhunt.fund', weight: 8500 });
     }
 
-    this.setState({ shouldConvertHunt: checked }, () => localStorage.setItem('shouldConvertHunt', checked));
+    this.setState({ shouldConvertHunt: checked }, () => window.safeStorage.setItem('shouldConvertHunt', checked));
     this.props.updateDraft('beneficiaries', beneficiaries);
   };
 

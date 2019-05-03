@@ -123,7 +123,7 @@ class PostView extends Component {
 
   checkDraft() {
     const { post } = this.props;
-    const draftString = localStorage.getItem('draft');
+    const draftString = window.safeStorage.getItem('draft');
     if (!draftString) {
       this.props.history.push(`${getPostPath(post)}/edit`);
     }
