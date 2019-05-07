@@ -17,6 +17,8 @@ import crypto from '@steemit/libcrypto';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { validateAccountName } from 'utils/helpers/accountName';
 
+import 'react-phone-input-2/dist/style.css'
+
 const FormItem = Form.Item;
 const PIN_VALID_SECONDS = 180
 
