@@ -1,3 +1,6 @@
+## I’ve found Steemhunt on the internet while looking how my website was indexed in google. Can you tell me what Steemhunt is really about and what it does to be featured in it?
+Steemhunt is the biggest tech early-adapters' community on blockchain. Our community members discover and share new cool products everyday and compete on the ranking board. People who contribute on Steemhunt community are rewarded by STEEM and HUNT tokens. Products featured on Steemhunt can get not only traffic, but also valuable feedbacks about their products for our tech savvy community members.
+
 ## What is Steemhunt?
 
 Steemhunt is a community generated leaderboard running on top of the Steem Blockchain that rewards people for sharing and upvoting cool new products as well as discovering new products. Products shared could be unique IT or hardware products such as web services, mobile apps, games, API, IT solutions, bots, open sources, tech gadgets and unique items.
