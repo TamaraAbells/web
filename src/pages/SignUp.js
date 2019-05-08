@@ -420,7 +420,7 @@ class SignUp extends Component {
           <h1>Have you securly stored your private key (passwords)?</h1>
           <p>
             Your private key is used to generate a signature for actions, such as signing-in and creating transactions in the Steem blockchain.
-            <b> We cannot recover your key if you lose it.</b>
+            <b> We cannot recover your key if you lose it. </b>
             Please securely store the key in a way that only you can access it.
           </p>
         </Modal>

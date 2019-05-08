@@ -51,4 +51,4 @@ Cons:
 You can contact us via
 * Discord: https://discord.gg/mWXpgks
 * Telegram: https://t.me/joinchat/AzcqGxCV1FZ8lJHVgHOgGQ
-* Email: steemhunt@gmail.com
+* Email: admin@hunt.town

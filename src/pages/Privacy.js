@@ -90,7 +90,7 @@ export default class Privacy extends Component {
         <h2>9. Changes</h2>
           <p>We may change this Privacy Policy from time to time. If we do, we will let you know by revising the date at the top of the policy. If we make a change to this policy that, in our sole discretion, is material, we will provide you with additional notice (such as adding a statement to steemouncements, the front page of the Services or sending you a notification). We encourage you to review the Privacy Policy whenever you access or use our Services or otherwise interact with us to stay informed about our information practices and the ways you can help protect your privacy. If you continue to use our Services after Privacy Policy changes go into effect, you consent to the revised policy.</p>
         <h2>10. Contact Us</h2>
-          <p>If you have any questions about this Privacy Policy, please email <a href="mailto:steemhunt@gmail.com">steemhunt@gmail.com</a>.</p>
+          <p>If you have any questions about this Privacy Policy, please email <a href="mailto:admin@hunt.town">admin@hunt.town</a>.</p>
         <Link to="/">Go to homepage</Link>
       </div>
     );
