@@ -3,7 +3,7 @@ export const getPostKey = function(post) {
 }
 
 export const getPostPath = function(post, prefix = '', query = '') {
-  return `${prefix}/@${post.author}/${post.permlink}${query}`;
+  return `${prefix}/@${post.author}/${post.permlink}${query ? query : ''}`;
 }
 
 export const getTagPath = function(tag) {
