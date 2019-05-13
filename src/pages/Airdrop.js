@@ -19,7 +19,6 @@ export default class Airdrop extends Component {
     this.state = {
       record_time: 0,
       total: 0,
-      days_passed: 0,
       airdrops: {}
     }
   }
@@ -31,7 +30,7 @@ export default class Airdrop extends Component {
   }
 
   renderStatus() {
-    const { total, days_passed, airdrops } = this.state;
+    const { total, airdrops } = this.state;
     const airdropKeys = Object.keys(airdrops);
 
     return (
@@ -39,10 +38,6 @@ export default class Airdrop extends Component {
         <div className="round-progress">
           <Progress type="circle" percent={formatFloat(total / 250000000 * 100)} />
           <span className="progress-text">{formatNumber(total)}<br/>HUNT tokens</span>
-        </div>
-        <div className="round-progress">
-          <Progress type="circle" percent={formatFloat(days_passed / 365 * 100)} format={(d) => `${days_passed} days`} />
-          <span className="progress-text">SMT ver release<br/>on May 21st, 2019</span>
         </div>
         {airdropKeys.map((key, i) => {
           const { data, label, disabled } = airdrops[key];
