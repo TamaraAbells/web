@@ -101,7 +101,7 @@ function* getMe({ token }) {
     steemConnectAPI.broadcast([['custom_json', { // async
       required_auths: [],
       required_posting_auths: [me.account.name],
-      id: 'hunt_active_user',
+      id: 'sh_active_user',
       json: JSON.stringify({
         account: me.account.name,
         user_score: info.detailed_user_score,
