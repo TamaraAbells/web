@@ -161,7 +161,7 @@ class Wallet extends Component {
       return <CircularProgress />;
     }
 
-    const totalHuntBalance = parseFloat(balances.hunt_balance) + parseFloat(balances.external_hunt_balance);
+    const totalHuntBalance = parseFloat(balances.internal_hunt_balance) + parseFloat(balances.external_hunt_balance);
 
     return (
       <div className="wallet">
@@ -182,7 +182,7 @@ class Wallet extends Component {
             <div className="token-bar-container">
               <div className="token-bar">
                 <span className="token-amount">
-                  {formatNumber(balances.hunt_balance)} HUNT
+                  {formatNumber(balances.internal_hunt_balance)} HUNT
                   {balances.locked_hunt > 0 &&
                     <span>&nbsp;(<Icon type="lock" /> {formatNumber(balances.locked_hunt)})</span>
                   }
@@ -200,7 +200,7 @@ class Wallet extends Component {
             </div>
             {balances.locked_hunt > 0 &&
               <ul className="sans small">
-                <li>- Ready for transfer: {formatNumber(balances.hunt_balance - balances.locked_hunt)} HUNT</li>
+                <li>- Ready for transfer: {formatNumber(balances.internal_hunt_balance - balances.locked_hunt)} HUNT</li>
                 <li>- Unlocking tokens tomorrow: {formatNumber(balances.daily_unlock)} HUNT</li>
               </ul>
             }
@@ -251,18 +251,10 @@ class Wallet extends Component {
                 renderItem={t => (
                   <List.Item className="left-padded transaction-item">
                     <List.Item.Meta
-                      avatar={me === t.sender ?
-                        <Avatar icon="arrow-right" className="icon sent" />
-                        :
-                        <Avatar icon="arrow-left" className="icon received" />
-                      }
-                      title={me === t.sender ?
-                        <div className="title sent">
-                          {`Sent ${formatNumber(t.amount)} to ` + (t.receiver ? `@${t.receiver}` : `ETH Wallet (${t.eth_address})`)}
-                        </div>
-                        :
+                      avatar={<Avatar icon="arrow-left" className="icon received" />}
+                      title={
                         <div className="title received">
-                          {`Received ${formatNumber(t.amount)} from ` + (t.sender ? `@${t.sender}` : `ETH Wallet (${t.eth_address})`)}
+                          {`Received ${formatNumber(t.amount)} from ` + (t.sender_username ? `@${t.sender_username}` : `ETH Wallet`)}
                         </div>
                       }
                       description={
