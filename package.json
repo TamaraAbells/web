@@ -30,7 +30,7 @@
     "react-lazyload": "^2.3.0",
     "react-loadable": "^5.5.0",
     "react-markdown": "^2.5.1",
-    "react-phone-input-2": "^2.9.3",
+    "react-phone-input-2": "github:Steemhunt/react-phone-input-2#master",
     "react-redux": "^5.1.1",
     "react-router-dom": "4.2.2",
     "react-tagsinput": "^3.19.0",
