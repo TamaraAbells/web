@@ -102,6 +102,7 @@ export function replyReducer(state, action) {
 function* reply({ parent, body, isModeratorComment }) {
   try {
     const myAccount = yield select(selectMyAccount());
+    const post = yield select(selectCurrentPost());
 
     const permlink = createCommentPermlink(parent.author, parent.permlink);
     const tempId = Math.floor((Math.random() * 1000000) + 1);
@@ -148,13 +149,16 @@ function* reply({ parent, body, isModeratorComment }) {
       yield put(addCommentsFromPosts(parent, tempId));
     }
 
-    // Update children counter on local & DB
-    const post = yield select(selectCurrentPost());
-    yield api.increaseCommentCount(post);
-    yield put(postIncreaseCommentCount(post));
+    // NOTE: `post` can be null when reply called from outside of posting page
+    if (post) {
+      // Update children counter on local & DB
+      yield api.increaseCommentCount(post);
+      yield put(postIncreaseCommentCount(post));
+    }
 
     yield put(replySuccess(parent, tempId, replyObj));
   } catch (e) {
+    console.error(e);
     yield notification['error']({ message: extractErrorMessage(e) });
     yield put(replyFailure(e.message));
   }
@@ -180,6 +184,7 @@ function* editReply({ comment, body }) {
 
     yield put(replyEditSuccess(comment.post_id, body));
   } catch(e) {
+    console.error(e);
     yield notification['error']({ message: extractErrorMessage(e) });
     yield put(replyFailure(e.message));
   }
