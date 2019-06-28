@@ -115,7 +115,14 @@ export default class ProfileView extends Component {
                 {account.reputation}
               </Timeline.Item>
               <Timeline.Item><FollowerCount author={account.name} unit="followers" /></Timeline.Item>
-              <Timeline.Item><UserSteemPower account={account} /></Timeline.Item>
+              <Timeline.Item>
+                <UserSteemPower account={account} />
+                {me === account.name &&
+                  <a href={`https://steemitwallet.com/@${account.name}/transfers`} target="_blank" rel="noopener noreferrer" alt="Claim Steem Reward on your Steem wallet">
+                    <Icon type="wallet" /> Steem Wallet
+                  </a>
+                }
+              </Timeline.Item>
               <Timeline.Item><UserEstimatedValue account={account} /></Timeline.Item>
             </Timeline>
           </div>
