@@ -33,25 +33,25 @@ export function isModerator(username) {
 export function isInfluencer(username) {
   const influencer = [
     'vinzie1',
-    'dwiitavita',
-    'nigelmarkdias',
-    'mrfringe',
-    'edje',
     'holovision',
-    'moderndayhippie',
-    'calprut',
-    'zoon123',
-    'elihs',
     'amar15',
-    'dalzphoto',
-    'karamyog',
-    'mobi72',
-    'fruitdaddy',
-    'venzam',
-    'jlufer',
+    'calprut',
+    'dwiitavita',
+    'edje',
+    'mrfringe',
     'ifeoluwa88',
+    'mobi72',
+    'bala41288',
+    'jlufer',
+    'bitland',
+    'venzam',
+    'maliktalha',
     'pavonj',
-    'jahangirwifii'
+    'elihs',
+    'certain',
+    'dalzphoto',
+    'xamir5',
+    'zoon123'
   ];
   return influencer.indexOf(username) !== -1;
 }
