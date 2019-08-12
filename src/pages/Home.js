@@ -53,7 +53,7 @@ export default class Home extends Component {
                 <div className="img roadmap-1"></div>
                 <h3>REVIEWHUNT</h3>
                 <p>Launching hub for makers</p>
-                <div className="status">PRE SIGN-UP</div>
+                <div className="status">LIVE NOW</div>
               </a>
               <div className="roadmap">
                 <div className="img roadmap-2"></div>
@@ -67,8 +67,8 @@ export default class Home extends Component {
 
                <div className="notice">
                 [NOTICE]<br/>
-                <a href="https://steemit.com/reviewhunt/@steemhunt/introducing-reviewhunt-a-launching-hub-for-makers-pre-sign-up-is-live" target="_blank"  rel="noopener noreferrer">
-                  Introducing Reviewhunt - a launching hub for makers. Pre Sign-up is Live
+                <a href="https://steemit.com/reviewhunt/@steemhunt/get-constantly-paid-to-invite-new-hunters-and-makers-reviewhunt" target="_blank"  rel="noopener noreferrer">
+                  Get constantly paid to invite new hunters and makers to Reviewhunt
                 </a>
               </div>
             </div>
