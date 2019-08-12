@@ -68,7 +68,7 @@ export default class Home extends Component {
                <div className="notice">
                 [NOTICE]<br/>
                 <a href="https://steemit.com/reviewhunt/@steemhunt/get-constantly-paid-to-invite-new-hunters-and-makers-reviewhunt" target="_blank"  rel="noopener noreferrer">
-                  Get constantly paid to invite new hunters and makers to Reviewhunt
+                  Get Constantly Paid to Invite New Hunters and Makers to Reviewhunt
                 </a>
               </div>
             </div>
