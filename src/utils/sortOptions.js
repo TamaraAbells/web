@@ -1,5 +1,5 @@
 export function getSortOption(key) {
-  let defaultOption = (key == 'profile' ? 'created' : 'hunt_score');
+  let defaultOption = (key === 'profile' ? 'created' : 'hunt_score');
   if (key === 'daily--1') {
     defaultOption = 'random';
   }
