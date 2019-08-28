@@ -33,6 +33,7 @@ export function updatePayout(content, contentType, myAccount, weight) {
 /*--------- SAGAS ---------*/
 function* vote({ content, weight, contentType }) {
   const myAccount = yield select(selectMyAccount());
+
   yield put(voteOptimistic(content, myAccount.username, weight, contentType));
 
   try {

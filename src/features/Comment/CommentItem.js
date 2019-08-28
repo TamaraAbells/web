@@ -16,6 +16,7 @@ import { getRoleName, isModerator, getUserScore } from 'features/User/utils';
 import { decreaseCommentcount } from 'features/Post/reducer';
 import { shouldCommentVisible } from 'features/Comment/utils/comments';
 import { updateComment } from 'features/Comment/actions/updateComment';
+import { getPostKey } from 'features/Post/utils';
 import api from 'utils/api';
 
 class CommentItem extends PureComponent {
@@ -73,7 +74,7 @@ class CommentItem extends PureComponent {
         permlink: comment.permlink
       }, true);
 
-      this.props.updateComment(comment.post_id, res);
+      this.props.updateComment(getPostKey(comment), res);
       this.setState({ loadingDislike: false });
     });
   }
@@ -144,17 +145,15 @@ class CommentItem extends PureComponent {
                 <CommentReplyForm content={comment} closeForm={this.closeReplyForm} />
               )}
 
-              {commentsChild[comment.post_id] && sortCommentsFromSteem(
-                commentsChild[comment.post_id],
-                commentsData,
-                'score'
-              ).map(commentId =>
-                <CommentItem
-                  {...this.props}
-                  key={commentId}
-                  comment={commentsData[commentId]}
-                />
-              )}
+              {commentsChild[getPostKey(comment)] &&
+                sortCommentsFromSteem(commentsChild[getPostKey(comment)], commentsData, 'score').map(commentKey =>
+                  <CommentItem
+                    {...this.props}
+                    key={commentKey}
+                    comment={commentsData[commentKey]}
+                  />
+                )
+              }
             </div>
           }
         />

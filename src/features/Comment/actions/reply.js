@@ -9,6 +9,7 @@ import { postIncreaseCommentCount } from 'features/Post/actions/refreshPost';
 import { selectCurrentPost } from 'features/Post/selectors';
 import api from 'utils/api';
 import { extractErrorMessage } from 'utils/errorMessage';
+import { getPostKey } from 'features/Post/utils';
 
 /*--------- CONSTANTS ---------*/
 const REPLY_BEGIN = 'REPLY_BEGIN';
@@ -71,18 +72,18 @@ export function replyReducer(state, action) {
           [tempId]: { $set: replyObj },
         },
         commentsChild: {
-          [parent.post_id]: { $autoArray: { $push: [tempId] } },
+          [getPostKey(parent)]: { $autoArray: { $push: [tempId] } },
         },
         isPublishing: { $set: false },
         hasSucceeded: { $set: true },
       });
     }
     case REPLY_EDIT_SUCCESS: {
-      const { id, body } = action;
+      const { key, body } = action;
 
       return update(state, {
         commentsData: {
-          [id]: { body: { $set: body } },
+          [key]: { body: { $set: body } },
         },
         isPublishing: { $set: false },
         hasSucceeded: { $set: true },
@@ -119,7 +120,6 @@ function* reply({ parent, body, isModeratorComment }) {
     const cashoutTime = toCustomISOString(new Date(Date.now() + 604800));
 
     const replyObj = {
-      post_id: tempId,
       author: myAccount.name,
       parent_author: parent.author,
       parent_permlink:  parent.permlink,
@@ -182,7 +182,7 @@ function* editReply({ comment, body }) {
       json_metadata,
     );
 
-    yield put(replyEditSuccess(comment.post_id, body));
+    yield put(replyEditSuccess(getPostKey(comment), body));
   } catch(e) {
     console.error(e);
     yield notification['error']({ message: extractErrorMessage(e) });

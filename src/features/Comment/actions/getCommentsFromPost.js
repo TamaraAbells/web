@@ -2,7 +2,7 @@ import { put, select, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import update from 'immutability-helper';
 import { notification } from 'antd';
-import { getRootCommentsList, mapCommentsBasedOnId } from '../utils/comments';
+import { getRootCommentsList } from '../utils/comments';
 import { sortCommentsFromSteem } from 'utils/helpers/stateHelpers';
 import { selectPosts } from 'features/Post/selectors';
 import { hasUpdated } from 'features/Post/utils';
@@ -42,7 +42,7 @@ export function getCommentsFromPostReducer(state, action) {
         commentsFromPost: {
           [action.postKey]: {$auto: {
             // SORTS COMMENTS HERE TO AVOID JUMPS WHEN VOTING
-            list: { $set: sortCommentsFromSteem(getRootCommentsList(action.state), mapCommentsBasedOnId(action.state.content), 'score') },
+            list: { $set: sortCommentsFromSteem(getRootCommentsList(action.state.content), action.state.content, 'score') },
           }},
         }
       });
@@ -65,18 +65,11 @@ function* getCommentsFromPost({ category, author, permlink }) {
 
     const comments_votes = {};
     for(let comment of Object.values(state.content)) {
-      // HACK: to rebind the API changes (id column renamed to post_id)
-      // REF: https://steemit.com/steemit/@steemitdev/upcoming-changes-to-api-steemit-com
-      // TODO: Remove the code after 2018-12-07 23:00:00 UTC
-      if (!comment.post_id) {
-        comment.post_id = comment.id;
-      }
-
       if (!comment.parent_author) { // Filter post
         continue;
       }
 
-      comments_votes[`${comment.post_id}`] = comment.active_votes
+      comments_votes[comment.post_id] = comment.active_votes
         .filter(vote => vote.voter !== comment.author) // exclude self-vote
         .map(vote => {
           return {
@@ -89,8 +82,7 @@ function* getCommentsFromPost({ category, author, permlink }) {
     const res = yield api.post('/comments/scores.json', { comments_votes: JSON.stringify(comments_votes) }, true);
     const { score_table } = res;
     // Update payout_value
-    const commentsData = mapCommentsBasedOnId(state.content);
-    for (const content of Object.values(commentsData)) {
+    for (const content of Object.values(state.content)) {
       content.payout_value = calculateContentPayout(content); // Sync with local format
 
       if (content.parent_author) {
