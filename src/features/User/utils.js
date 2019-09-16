@@ -32,26 +32,6 @@ export function isModerator(username) {
 
 export function isInfluencer(username) {
   const influencer = [
-    'vinzie1',
-    'ifeoluwa88',
-    'amar15',
-    'edje',
-    'karamyog',
-    'dwiitavita',
-    'jlufer',
-    'certain',
-    'holovision',
-    'calprut',
-    'krevasilis',
-    'direwolf',
-    'rangertx',
-    'hallmann',
-    'zoon123',
-    'alokkumar121',
-    'sumit71428',
-    'dkmathstats',
-    'bala41288',
-    'shayan143'
   ];
   return influencer.indexOf(username) !== -1;
 }
