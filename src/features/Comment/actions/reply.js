@@ -32,8 +32,8 @@ function replySuccess(parent, tempId, replyObj) {
   return { type: REPLY_SUCCESS, parent, tempId, replyObj };
 }
 
-function replyEditSuccess(id, body) {
-  return { type: REPLY_EDIT_SUCCESS, id, body };
+function replyEditSuccess(key, body) {
+  return { type: REPLY_EDIT_SUCCESS, key, body };
 }
 
 function replyFailure(message) {
