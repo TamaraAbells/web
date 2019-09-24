@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Modal, Popconfirm, Input, Button, Checkbox } from 'antd';
 import { formatNumber } from "utils/helpers/steemitHelpers";
 
-const MIN_WITHDRAW = 10.01;
-const FEE = 10;
+const MIN_WITHDRAW = 20.01;
+const FEE = 20;
 const MAX_WITHDRAW = 10000.00;
 
 export default class TransferModal extends Component {
