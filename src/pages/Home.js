@@ -59,7 +59,7 @@ export default class Home extends Component {
                 <div className="img roadmap-2"></div>
                 <h3>IDEAHUNT</h3>
                 <p>Crowdfunding by NFT</p>
-                <div className="status">4Q, 2019</div>
+                <div className="status">TBD</div>
               </div>
               <a href="https://token.hunt.town" target="_blank" rel="noopener noreferrer" className="token-site">
                 What is HUNT Platform? <Icon type="right-circle" />
