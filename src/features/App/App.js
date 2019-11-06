@@ -21,7 +21,7 @@ class App extends Component {
     this.params = new URLSearchParams(this.props.location.search);
     this.state = {
       showBanner: this.params.get('ref') !== null,
-      showOtherBanner: window.safeStorage.getItem('hideOtherBanner') !== 'true',
+      showOtherBanner: false, //window.safeStorage.getItem('hideOtherBanner') !== 'true',
     }
   }
 
