@@ -373,6 +373,17 @@ hr {
     }
     .checkitout-button {
       margin-top: 0.75rem;
+
+      &.poki {
+        background-color: #000;
+        padding: 0.75em 2.0em !important;
+        text-decoration: none;
+
+        img {
+          margin-top: -4px;
+          width: 106px;
+        }
+      }
     }
   }
 
@@ -426,6 +437,20 @@ hr {
         }
       }
     } // .timeline-container
+
+    .poki-button {
+      display: inline-block;
+      border: solid 1px #7e91ab;
+      background-color: #000000;
+      padding: 0.5em 1em;
+      border-radius: 10px;
+      margin-bottom: 40px;
+
+      img {
+        margin-top: -4px;
+        width: 106px;
+      }
+    }
   } // .bottom-container
 } // .diagonal-split-view
 

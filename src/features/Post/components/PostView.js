@@ -20,6 +20,7 @@ import { getCachedImage, hasBoosted } from 'features/Post/utils';
 import ShareButton from './ShareButton';
 import { titleize } from 'utils/helpers/stringHelpers';
 import parrot from 'assets/images/parrot.gif';
+import playPoki from 'assets/images/play-poki.svg';
 
 class PostView extends Component {
   static propTypes = {
@@ -233,6 +234,9 @@ class PostView extends Component {
       </Button>
     );
 
+    // Partnership with Poki web game platform
+    const isPokiURL = !!post.url.match(/https:\/\/poki\.com\/.+/);
+
     return (
       <div className="post-view diagonal-split-view">
         <div className="top-container primary-gradient">
@@ -284,16 +288,29 @@ class PostView extends Component {
             {titleize(post.title)}
           </h1>
           <h2>{post.tagline}</h2>
-          <Button
-            href={addReferral(post.url)}
-            type="primary"
-            className="round-border inversed-color padded-button checkitout-button"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => window.gtag('event', 'check_it_out_clicked', { 'event_category' : 'lead', 'event_label' : getPostKey(post) })}
-          >
-            CHECK IT OUT
-          </Button>
+          {isPokiURL ?
+            <a
+              href={addReferral(post.url)}
+              type="primary"
+              className="round-border padded-button checkitout-button poki"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => window.gtag('event', 'check_it_out_clicked', { 'event_category' : 'lead', 'event_label' : getPostKey(post) })}
+            >
+              <img src={playPoki}/>
+            </a>
+          :
+            <Button
+              href={addReferral(post.url)}
+              type="primary"
+              className="round-border inversed-color padded-button checkitout-button"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => window.gtag('event', 'check_it_out_clicked', { 'event_category' : 'lead', 'event_label' : getPostKey(post) })}
+            >
+              CHECK IT OUT
+            </Button>
+          }
         </div>
         <div className="diagonal-line"></div>
         <div className="bottom-container">
@@ -325,6 +342,19 @@ class PostView extends Component {
           <div className="tags">
             {tags}
           </div>
+
+          {isPokiURL &&
+            <a
+              href={addReferral(post.url)}
+              type="primary"
+              className="poki-button"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => window.gtag('event', 'check_it_out_clicked', { 'event_category' : 'lead', 'event_label' : getPostKey(post) })}
+            >
+              <img src={playPoki}/>
+            </a>
+          }
         </div>
         <Modal visible={this.state.previewVisible} footer={null} onCancel={this.hideModal} className="preview-modal" centered>
           {
