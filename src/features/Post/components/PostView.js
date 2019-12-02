@@ -288,29 +288,16 @@ class PostView extends Component {
             {titleize(post.title)}
           </h1>
           <h2>{post.tagline}</h2>
-          {isPokiURL ?
-            <a
-              href={addReferral(post.url)}
-              type="primary"
-              className="round-border padded-button checkitout-button poki"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => window.gtag('event', 'check_it_out_clicked', { 'event_category' : 'lead', 'event_label' : getPostKey(post) })}
-            >
-              <img src={playPoki}/>
-            </a>
-          :
-            <Button
-              href={addReferral(post.url)}
-              type="primary"
-              className="round-border inversed-color padded-button checkitout-button"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => window.gtag('event', 'check_it_out_clicked', { 'event_category' : 'lead', 'event_label' : getPostKey(post) })}
-            >
-              CHECK IT OUT
-            </Button>
-          }
+          <Button
+            href={addReferral(post.url)}
+            type="primary"
+            className="round-border inversed-color padded-button checkitout-button"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => window.gtag('event', 'check_it_out_clicked', { 'event_category' : 'lead', 'event_label' : getPostKey(post) })}
+          >
+            CHECK IT OUT
+          </Button>
         </div>
         <div className="diagonal-line"></div>
         <div className="bottom-container">
