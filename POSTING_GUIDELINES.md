@@ -53,6 +53,8 @@ There are countless games worldwide, and many of them have narrow target custome
 
 We don't accept games that have not been launched unless 1) the game has announced an actual demo or gameplay and 2) people can purchase it as a pre-order.
 
+Exception] Any games that are listed on poki.com will be accepted on Steemhunt too due to the collaboration between Poki and Steemhunt.
+
 
 <hr>
 
