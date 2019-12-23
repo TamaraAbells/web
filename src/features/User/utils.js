@@ -23,9 +23,7 @@ export function format(user, appProps) {
 
 export function isModerator(username) {
   const moderators = [
-    'tabris', 'project7',
-    'teamhumble', 'urbangladiator', 'dayleeo', 'fknmayhem', 'jayplayco', 'bitrocker2020', 'joannewong',
-    'monajam', 'pialejoana', 'aamirijaz'
+    'tabris', 'project7', 'ggomaeng'
   ];
   return moderators.indexOf(username) !== -1;
 }
@@ -37,22 +35,18 @@ export function isInfluencer(username) {
 }
 
 export function isCommunityManager(username) {
-  const communityManagers = [
-    'jayplayco'
-  ];
+  const communityManagers = [];
   return communityManagers.indexOf(username) !== -1;
 }
 
 export function isSocialManager(username) {
-  const socialManagers = [
-    'mtimetraveller'
-  ];
+  const socialManagers = [];
   return socialManagers.indexOf(username) !== -1;
 }
 
 export function isAdmin(username) {
   const admins = [
-    'tabris', 'project7',
+    'tabris', 'project7', 'ggomaeng'
   ];
   return admins.indexOf(username) !== -1;
 }
