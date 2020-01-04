@@ -339,7 +339,7 @@ class PostView extends Component {
               rel="noopener noreferrer"
               onClick={() => window.gtag('event', 'check_it_out_clicked', { 'event_category' : 'lead', 'event_label' : getPostKey(post) })}
             >
-              <img src={playPoki}/>
+              <img src={playPoki} alt="Play on Poki"/>
             </a>
           }
         </div>

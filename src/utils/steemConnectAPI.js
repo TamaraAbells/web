@@ -1,11 +1,22 @@
-import sc2 from 'steemconnect';
+// import sc2 from 'steemconnect';
 
-const api = sc2.Initialize({
-  baseURL: 'https://steemconnect.com',
+// const api = sc2.Initialize({
+//   baseURL: 'https://steemconnect.com',
+//   app: 'steemhunt.com',
+//   callbackURL: process.env.REACT_APP_STEEMCONNECT_REDIRECT_URL,
+//   accessToken: 'access_token',
+//   scope: [ 'vote', 'comment', 'delete_comment', 'comment_options', 'custom_json' ],
+// });
+
+// export default api;
+
+
+const steemconnect = require('steemconnect');
+
+const api = new steemconnect.Client({
   app: 'steemhunt.com',
   callbackURL: process.env.REACT_APP_STEEMCONNECT_REDIRECT_URL,
-  accessToken: 'access_token',
-  scope: [ 'vote', 'comment', 'delete_comment', 'comment_options', 'custom_json' ],
+  scope: ['vote', 'comment', 'delete_comment', 'comment_options', 'custom_json']
 });
 
 export default api;

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign,no-empty */
 import React from 'react';
 import sanitizeHtml from 'sanitize-html';
-import Remarkable from 'remarkable';
+import { Remarkable } from 'remarkable';
 import emojione from 'emojione';
 import embedjs from 'embedjs';
 import sanitizeConfig from './helpers/SanitizeConfig';
@@ -11,7 +11,6 @@ import PostFeedEmbed from './PostFeedEmbed';
 const remarkable = new Remarkable({
   html: true, // remarkable renders first then sanitize runs...
   breaks: true,
-  linkify: false, // linkify is done locally
   typographer: false, // https://github.com/jonschlinkert/remarkable/issues/142#issuecomment-221546793
   quotes: '“”‘’'
 });
