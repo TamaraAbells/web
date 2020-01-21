@@ -235,7 +235,7 @@ class PostView extends Component {
     );
 
     // Partnership with Poki web game platform
-    const isPokiURL = !!post.url.match(/https:\/\/poki\.com\/.+/);
+    const isPokiURL = !!post.url.match(/https?:\/\/poki\.com\/.+/);
 
     return (
       <div className="post-view diagonal-split-view">
