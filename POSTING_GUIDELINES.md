@@ -21,6 +21,10 @@ Steemhunt generally covers unique IT or hardware products, including:
 
 If you are posting any conceptual product, it must be past the planning stage. It should have an official physical prototype announced.
 
+If you share a generic product, the moderator (or team) will hide your hunt post. If you keep sharing generic products multiple times, the team can blacklist your account in order to protect the voting reward pool.
+
+Circulating posts (meaning that a hunter keeps posting different version or products from the one brand/company/website source) are also not allowed. This behaviour will lead your account to be blacklisted.
+
 ## 3. Product Link
 We only accept these four product links (Your post will be delisted if you include other websites than those listed below):
 
@@ -72,4 +76,4 @@ Steemhunt is running a blacklist to maintain a fair community platform. If you c
 Even if you are blacklisted, you can still use our platform (posting, upvoting, and commenting), however, you won't be able to get upvoted nor received airdrops by Steemhunt. We announce the blacklist via #blacklist channel in our [Discord Group](https://discord.gg/mWXpgks) You can also appeal via #blacklist-appeal channel if you think you did not commit any of the actions above.
 
 
-Please note that our moderators are human, so they may make mistakes/errors during the moderation process. If you have query, please join our [Discord Group](https://discord.gg/mWXpgks) and request to re-review in the #moderation-errors channel. *These posting guidelines were updated on November 2, 2018.*
+Please note that our moderators are human, so they may make mistakes/errors during the moderation process. If you have query, please join our [Discord Group](https://discord.gg/mWXpgks) and request to re-review in the #moderation-errors channel. *These posting guidelines were updated on February 27, 2020.*
