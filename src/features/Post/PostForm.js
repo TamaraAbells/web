@@ -324,7 +324,7 @@ class PostForm extends Component {
     }
 
     if (checked) {
-      beneficiaries.push({ account: 'steemhunt.fund', weight: 8500 });
+      beneficiaries.push({ account: 'steemhunt.fund', weight: 9000 });
     }
 
     this.setState({ shouldConvertHunt: checked }, () => window.safeStorage.setItem('shouldConvertHunt', checked));
@@ -578,10 +578,7 @@ class PostForm extends Component {
         {!this.state.editMode &&
           <FormItem {...formItemLayoutWithOutLabel}>
             <p className="text-small top-margin">
-              10% beneficiaries will be used for Steemhunt operation, and another 5% for sponsors who&nbsp;
-              <a href="https://steemit.com/steemhunt/@steemhunt/introducing-incentives-for-steemhunt-sponsors" target="_blank" rel="noopener noreferrer">
-                delegated Steem Power to @steemhunt.
-              </a>
+              10% beneficiaries will be used for Steemhunt operation.
               <br/>
               {timeUntilMidnightSeoul()}
             </p>

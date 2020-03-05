@@ -14,11 +14,9 @@ import { extractErrorMessage } from 'utils/errorMessage';
 const MAIN_CATEGORY = 'steemhunt';
 const DEFAULT_BENEFICIARY = [
   { account: 'steemhunt', weight: 1000 },
-  { account: 'steemhunt.pay', weight: 500 },
 ];
 const PARTNERED_BENEFICIARY = [
   { account: 'steemhunt', weight: 800 },
-  { account: 'steemhunt.pay', weight: 500 },
 ];
 
 const PUBLISH_CONTENT_BEGIN = 'PUBLISH_CONTENT_BEGIN';

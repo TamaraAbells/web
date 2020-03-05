@@ -59,7 +59,7 @@ export default class Terms extends Component {
           <p>10.8. No Cancellations or Modifications. Once transaction details have been submitted to the Steem network via the Services, The Services cannot assist you to cancel or otherwise modify your transaction details. Steemhunt has no control over the Steem Network and does not have the ability to facilitate any cancellation or modification requests.</p>
           <p>10.9. Taxes. It is your responsibility to determine what, if any, taxes apply to the transactions you for which you have submitted transaction details via the Services, and it is your responsibility to report and remit the correct tax to the appropriate tax authority. You agree that Steemhunt is not responsible for determining whether taxes apply to your Steem transactions or for collecting, reporting, withholding or remitting any taxes arising from any Steem transactions.</p>
         <h2>11. Fees for Using the Steemhunt Services</h2>
-          <p>11.1. 10% beneficiaries will be used for Steemhunt operation, and another 5% for sponsors who delegated Steem Power to @steemhunt.</p>
+          <p>11.1. 10% beneficiaries will be used for Steemhunt operation.</p>
         <h2>12. No Right To Cancel And&sol;Or Reverse Steem Transactions</h2>
           <p>12.1. If you use a Service to which Steem, Steem Dollars or Steem Power is transacted, you will not be able to change your mind once you have confirmed that you wish to proceed with the Service or transaction.</p>
         <h2>13. Discontinuation of Services</h2>

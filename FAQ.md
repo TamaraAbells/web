@@ -26,10 +26,6 @@ Summarily, Every action on Steemhunt appears on steemit and vice-versa, therefor
 
 We only accept private key generated on Steemit.com. If by any case you forget or lose your private key as a result of a tamper with your account on Steemit.com, you will have to contact Steemit.com for help. Your information is safe. Note that we do not store your keys at all, hence, we do not have any information or any form of access, that would compromise or jeopardize our site users directly or indirectly. You can also see our #Privacy Policy to know what type of information is collected and how it is stored and used.
 
-## What is Steemhunt Sponsors?
-
-Steemhunt is running a Steem Power Delegation Program. We are collecting 5% beneficiary from the author rewards via the Steemhunt platform, and we will distribute it among sponsors who delegate Steem Power (SP) to @steemhunt. The amount of the rewards will be proportional to the delegated SP. Please read this article to see more details - Introducing Incentives for Steemhunt Sponsors.
-
 ## What is "Review Comment" (Pros and Cons)
 
 "Review comment" is a special type of comment that includes commeter's review (pros and cons) on other user's hunt.
