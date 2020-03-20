@@ -187,59 +187,38 @@ class SignIn extends Component {
     });
   }
 
-  renderForm(stage) {
-    const { getFieldDecorator } = this.props.form;
-
-    let form;
-
-    switch (stage) {
-      case 0:
-        form = (
-          <div key={0} className="form-container">
-            <img src={userImage} alt="Steem User" />
-            <p>
-              Choose your username.
-              This will be the name that you are called in Steemhunt and other Steem-based apps.
-            </p>
-            <Form onSubmit={this.submitAccount}>
-              <FormItem
-                validateStatus={this.validateStatus(this.state.accountCheck)}
-                help={this.state.accountCheckMsg}
-                hasFeedback
-              >
-                {getFieldDecorator('userName', {
-                  rules: [{ required: true, message: null, validator: this.checkAccount }],
-                })(
-                  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" autocapitalize="off" autoFocus />
-                )}
-              </FormItem>
-              <div className="actions-container">
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  disabled={this.state.accountCheck !== 'validated'}
-                  onClick={() => window.gtag('event', 'signup_process', { 'event_category' : 'signup', 'event_label' : 'ID Verified' })}
-                  block
-                >
-                  Continue
-                </Button>
-              </div>
-            </Form>
-          </div>
-        )
-        break;
-    }
-    return form;
-  }
-
   render() {
     return (
       <div className="sign-up-form">
         <Helmet>
-          <title>Sign up - Steemhunt</title>
+          <title>Login - Steemhunt</title>
         </Helmet>
         <h1>{this.state.pageTitle}</h1>
-        {this.renderForm(this.state.stage)}
+        <div key={0} className="form-container">
+          <img src={userImage} alt="Steem User" />
+          <Form onSubmit={this.submitAccount}>
+            <FormItem
+              validateStatus={this.validateStatus(this.state.accountCheck)}
+              help={this.state.accountCheckMsg}
+              hasFeedback
+            >
+
+              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" autocapitalize="off" autoFocus />
+              <Input prefix={<Icon type="key" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Posting Key or Password" autocapitalize="off" autoFocus />
+            </FormItem>
+            <div className="actions-container">
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={this.state.accountCheck !== 'validated'}
+                onClick={() => window.gtag('event', 'signup_process', { 'event_category' : 'signup', 'event_label' : 'ID Verified' })}
+                block
+              >
+                Continue
+              </Button>
+            </div>
+          </Form>
+        </div>
         <Modal
           wrapClassName="private-key-modal"
           visible={this.state.modalVisible}
