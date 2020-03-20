@@ -210,7 +210,7 @@ class SignUp extends Component {
                 {getFieldDecorator('userName', {
                   rules: [{ required: true, message: null, validator: this.checkAccount }],
                 })(
-                  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" autocapitalize="off" autoFocus />
+                  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" autoCapitalize="off" autoFocus />
                 )}
               </FormItem>
               <div className="actions-container">

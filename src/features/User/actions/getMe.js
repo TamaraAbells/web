@@ -84,7 +84,13 @@ function* getMe({ token }) {
       return;
     }
 
-    const me = (yield steem.api.getAccounts('tabris'))[0]; // TODO: Get username from safeStorage
+    window.steem = steem;
+
+    const accounts = yield steem.api.getAccounts(['tabris']);
+    console.log('------------', accounts);
+
+
+    const me = (yield steem.api.getAccounts(['tabris']))[0]; // TODO: Get username from safeStorage
     const rcInfo = yield getRCInfo(me.user);
     const appProps = yield select(selectAppProps());
 
@@ -115,7 +121,7 @@ function* refreshMe() {
   }
 
   try {
-    const me = (yield steem.api.getAccounts('tabris'))[0]; // TODO: Get username from safeStorage
+    const me = (yield steem.api.getAccounts(['tabris']))[0]; // TODO: Get username from safeStorage
     const rcInfo = yield getRCInfo(me.user);
     const appProps = yield select(selectAppProps());
 

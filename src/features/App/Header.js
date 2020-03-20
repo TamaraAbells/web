@@ -53,7 +53,7 @@ class Header extends Component {
   };
 
   render() {
-    const { me, myAccount, isLoading, follow, searchTerm } = this.props;
+    const { me, myAccount, isLoading, searchTerm } = this.props;
     const searchBarHidden = (this.props.path === '/wallet' || this.props.path === '/post');
     const menu = (
       <MenuContent

@@ -22,7 +22,6 @@ const Privacy = asyncComponent(() => import('pages/Privacy'));
 const Cookies = asyncComponent(() => import('pages/Cookies'));
 const HuntedList = asyncComponent(() => import('pages/HuntedList'));
 const Profile = asyncComponent(() => import('pages/Profile'));
-const ProfileDraft = asyncComponent(() => import('pages/ProfileDraft'));
 const HuntedListByAuthor = asyncComponent(() => import('pages/HuntedListByAuthor'));
 const RelatedTag = asyncComponent(() => import('pages/RelatedTag'));
 const TagList = asyncComponent(() => import('pages/TagList'));
