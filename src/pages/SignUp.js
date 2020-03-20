@@ -8,7 +8,7 @@ import smsImage from 'assets/images/sign-up/img-phone@2x.png';
 import pinImage from 'assets/images/sign-up/img-phone-confirmation@2x.png';
 import verifiedImage from 'assets/images/sign-up/icon-thumb@2x.png';
 import keyImage from 'assets/images/sign-up/icon-key@2x.png';
-import steemImage from 'assets/images/sign-up/img-allset-stc@2x.png';
+import catImg from 'assets/images/img-about-cat@2x.png';
 import ReactPhoneInput from 'react-phone-input-2';
 import { isValidNumber, formatNumber } from 'libphonenumber-js';
 import steem from 'steem';
@@ -358,9 +358,9 @@ class SignUp extends Component {
         form = (
           <div key={5} className="form-container">
             <p>
-              Now you can use Steemhunt and other Steem apps via SteemConnect, a secure way to login without giving up your private keys (password).
+              Now you can use Steemhunt and other Steem apps via your private key (password).
             </p>
-            <img className="full-width" src={steemImage} alt="All Done" />
+            <img className="cat-img" src={catImg} alt="All Done" />
 
             <div className="actions-container">
               <Button type="primary" block onClick={() => window.location = "/sign-in"}>Login Now</Button>

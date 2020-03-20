@@ -23,23 +23,6 @@ export default class SignUpGuide extends Component {
           <img src={steemDapps} alt="Steem Dapps" className="image hunt-platform" />
         </div>
         <div className="page-block">
-          <h2>How to Login to Steem dApps?</h2>
-          <div className="thin">
-            After you’ve signed up via Steemhunt, you will receive the private key for your Steem account.
-            Whenever you login to any Steem apps (including Steemhunt), you will be asked to login via Steemconnect, a secure way to login without giving up your private key.
-          </div>
-          <div className="sign-up-samples">
-            <div className="sign-up-samples-left">
-              <span className="primary-round">When you login<br/>for the first time<br/>you will sign-in with<br/>your Steem account.</span>
-              <img src={signUpLeft} alt="SignUp Mobile"/>
-            </div>
-            <div className="sign-up-samples-right">
-              <img src={signUpRight} alt="SignUp Mobile" />
-              <span className="primary-round">Every other time<br/>you login you can<br/>just simply click on<br/>your account tab.</span>
-            </div>
-          </div>
-        </div>
-        <div className="page-block">
           <h2>About STEEM Wallet</h2>
           <div className="thin">
             In Steemhunt, product hunters are rewarded with STEEM cryptocurrency for their dedicated activities, such as creating, upvoting and commenting on hunting posts.
