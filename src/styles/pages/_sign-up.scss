@@ -23,6 +23,21 @@
     }
   }
 
+  .dont-have-account,
+  h3 {
+    color: #707070;
+  }
+
+  .login-button {
+    margin-top: 1.625rem;
+    height: 40px;
+  }
+
+  .dont-have-account {
+    cursor: pointer;
+    margin-top: 1.25rem;
+  }
+
   .form-container {
     width: 368px;
     margin: 0 auto;

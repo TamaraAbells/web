@@ -12,9 +12,15 @@ export function getEncryptedToken() {
     return null;
   }
 }
+
+export function setUsername(username) {
+  return window.safeStorage.setItem('username', username);
+}
+
 export function setToken(token) {
   return window.safeStorage.setItem('posting_key', token);
 }
+
 export function removeToken() {
   return window.safeStorage.removeItem('posting_key');
 }
