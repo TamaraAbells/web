@@ -88,7 +88,7 @@ function* getMe({ token }) {
     const rcInfo = yield getRCInfo(me.user);
     const appProps = yield select(selectAppProps());
 
-    setToken(token);
+    setToken(token); // TODO: why? - is this necessary?
 
     // This is the only time sending non-encrypted token to the server (so server can validate users)
     // Make sure tokens must be filtered from all the logs and should not be saved in a raw format
