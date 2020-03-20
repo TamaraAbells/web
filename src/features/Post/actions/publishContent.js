@@ -175,24 +175,8 @@ function* publishContent({ props, editMode }) {
       app: 'steemhunt/1.0.0',
     };
 
-    let operations = [
-      ['comment',
-        {
-          wif: getToken(),
-          parent_author: '',
-          parent_permlink: tags[0],
-          author: newPost.author,
-          permlink: newPost.permlink,
-          title,
-          body: getBody(newPost),
-          json_metadata: JSON.stringify(metadata),
-        },
-      ]
-    ];
-
+    let beneficiaries = newPost.beneficiaries || [];
     if (!editMode) { // only on create
-      let beneficiaries = newPost.beneficiaries || [];
-
       // If our partner's beneficiary, take the cut from Steemhunt side, not users
       if (beneficiaries.some(b => b.account === 'steemplus-pay')) {
         beneficiaries = PARTNERED_BENEFICIARY.concat(beneficiaries);
@@ -209,27 +193,37 @@ function* publishContent({ props, editMode }) {
           return 0;
         }
       });
-
-      operations.push(['comment_options', {
-        wif: getToken(),
-        author: newPost.author,
-        permlink: newPost.permlink,
-        max_accepted_payout: '1000000.000 SBD',
-        percent_steem_dollars: 10000,
-        allow_votes: true,
-        allow_curation_rewards: true,
-        extensions: [
-          [0, {
-            beneficiaries: beneficiaries
-          }]
-        ]
-      }]);
     }
-    // console.log('3-------------', operations);
 
     try {
       // if (process.env.NODE_ENV === 'production') {
-        yield steem.broadcast(operations);
+        yield steem.broadcast.commentAsync(
+          getToken(),
+          '',
+          tags[0],
+          newPost.author,
+          newPost.permlink,
+          title,
+          getBody(newPost),
+          JSON.stringify(metadata),
+        )
+
+        if (!editMode) {
+          yield steem.broadcast.commentOptionsAsync(
+            getToken(),
+            newPost.author,
+            newPost.permlink,
+            '1000000.000 SBD',
+            10000,
+            true,
+            true,
+            [
+              [0, {
+                beneficiaries: beneficiaries
+              }]
+            ]
+          )
+        }
       // }
     } catch (e) {
       // Delete post on Steemhunt as transaction failed

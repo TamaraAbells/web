@@ -42,9 +42,9 @@ export function getMeReducer(state, action) {
 
       return update(state, {
         isLoading: { $set: false },
-        me: { $set: action.me.name },
+        me: { $set: me.name },
         accounts: {
-          [action.me.name]: {$auto: { $merge: action.me }},
+          [me.name]: {$auto: { $merge: me }},
         },
       });
     }

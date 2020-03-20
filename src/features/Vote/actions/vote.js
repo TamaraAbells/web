@@ -37,7 +37,7 @@ function* vote({ content, weight, contentType }) {
   yield put(voteOptimistic(content, myAccount.username, weight, contentType));
 
   try {
-    yield steem.broadcast.vote(getToken(), myAccount.username, content.author, content.permlink, weight);
+    yield steem.broadcast.voteAsync(getToken(), myAccount.username, content.author, content.permlink, weight);
 
     // UPDATE PAYOUT
     const { author, permlink } = content;

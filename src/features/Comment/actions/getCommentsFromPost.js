@@ -10,6 +10,9 @@ import { postRefreshBegin, postRefreshSuccess } from 'features/Post/actions/refr
 import { calculateContentPayout } from 'utils/helpers/steemitHelpers';
 import api from 'utils/api';
 
+window.retried = 0;
+const delay = time => new Promise(resolve => setTimeout(resolve, time));
+
 /*--------- CONSTANTS ---------*/
 const GET_COMMENTS_FROM_POST_BEGIN = 'GET_COMMENTS_FROM_POST_BEGIN';
 export const GET_COMMENTS_FROM_POST_SUCCESS = 'GET_COMMENTS_FROM_POST_SUCCESS';
@@ -97,7 +100,15 @@ function* getCommentsFromPost({ category, author, permlink }) {
     const post = state.content[postKey];
 
     if (!post || post.id === 0) {
-      throw new Error('No content found on the Steem Blockchain. Please try updating your hunt to re-submit to the blockchain.');
+      // NOTE: API server doesn't output the content right after the posting is made (maybe sychronization issue)
+      if (window.retried < 10) {
+        window.retried++;
+        yield delay(1000);
+        console.log('Retried getCommentsFromPost');
+        return yield getCommentsFromPost({ category, author, permlink });
+      } else {
+        throw new Error('No content found on the Steem Blockchain. Please try updating your hunt to re-submit to the blockchain.');
+      }
     }
 
     if (posts && posts[postKey] && hasUpdated(posts[postKey], post) && !posts[postKey].isUpdating) {

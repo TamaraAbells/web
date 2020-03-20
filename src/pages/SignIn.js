@@ -40,8 +40,10 @@ class SignIn extends Component {
           steem.auth.wifIsValid(this.state.password, publicPostingKey) ||
           steem.auth.wifIsValid(this.state.password, publicActiveKey) ||
           steem.auth.wifIsValid(this.state.password, publicOwnerKey);
+
+
       } catch (e) {
-        notification["error"]({ message: "Failed to validate private key." });
+        notification["error"]({ message: "Failed to validate your key. Please enter your posting key (or master password) correctly." });
         this.setState({ loading: false });
         return;
       }
@@ -50,14 +52,25 @@ class SignIn extends Component {
         setUsername(this.state.username);
         setToken(this.state.password);
         this.props.getMe(this.state.password, this.state.username);
+        return this.props.history.push('/');
       } else {
         notification["error"]({
-          message: "Wrong username/password combination."
+          message: "Failed to validate your key. Please enter your posting key (or master password) correctly."
         });
       }
 
       this.setState({ loading: false });
     });
+  };
+
+  setPassword = (someKey) => {
+    let postingKey = someKey;
+    if (someKey[0] === 'P') { // When user enters master password
+      const keys = steem.auth.getPrivateKeys(this.state.username, someKey, ['posting']);
+      postingKey = keys['posting'];
+    }
+
+    this.setState({ password: postingKey });
   };
 
   render() {
@@ -68,10 +81,10 @@ class SignIn extends Component {
         </Helmet>
         <h1>Login</h1>
         <div key={0} className="form-container">
-          <h3 className="text-center">
-            Steemhunt do not store your password information (private or posting
-            key). Your login credential will stay only on your device.
-          </h3>
+          <p>
+            Enter your Steem username and password (posting key).
+            Your login credential will be stored only on your browser until you logout.
+          </p>
 
           <img src={userImage} alt="Steem User" />
           <Form onSubmit={this.login}>
@@ -91,7 +104,7 @@ class SignIn extends Component {
                 }
                 placeholder="Posting Key or Password"
                 autoCapitalize="off"
-                onChange={e => this.setState({ password: e.target.value })}
+                onChange={e => this.setPassword(e.target.value)}
                 autoFocus
               />
             </FormItem>

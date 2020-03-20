@@ -135,7 +135,7 @@ function* reply({ parent, body, isModeratorComment }) {
       author_reputation: myAccount.reputation,
     };
 
-    yield steem.broadcast.comment(
+    yield steem.broadcast.commentAsync(
       getToken(),
       parent.author,
       parent.permlink,
@@ -174,7 +174,7 @@ function* editReply({ comment, body }) {
     } catch(e) {
       json_metadata = comment.json_metadata;
     }
-    yield steem.broadcast.comment(
+    yield steem.broadcast.commentAsync(
       getToken(),
       comment.parent_author,
       comment.parent_permlink,
