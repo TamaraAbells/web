@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import { Form, Input, Icon, Button, notification } from "antd";
 import { withRouter } from "react-router-dom";
-import api from "utils/api";
 import steem from "steem";
 import userImage from "assets/images/sign-up/icon-create-account@2x.png";
 import { setToken, setUsername } from "utils/token";

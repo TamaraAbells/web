@@ -84,10 +84,7 @@ function* getMe({ token }) {
       return;
     }
 
-    window.steem = steem;
-
     const me = (yield steem.api.getAccountsAsync(['tabris']))[0]; // TODO: Get username from safeStorage
-
     const rcInfo = yield getRCInfo(me.user);
     const appProps = yield select(selectAppProps());
 
