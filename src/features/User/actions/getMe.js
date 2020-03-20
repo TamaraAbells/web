@@ -39,12 +39,11 @@ export function getMeReducer(state, action) {
       });
     }
     case GET_ME_SUCCESS: {
-      const { account, user } = action.me;
       return update(state, {
         isLoading: { $set: false },
-        me: { $set: user },
+        me: { $set: action.me.name },
         accounts: {
-          [user]: {$auto: { $merge: account }},
+          [action.me.name]: {$auto: { $merge: me }},
         },
       });
     }
