@@ -39,21 +39,6 @@ function* vote({ content, weight, contentType }) {
   try {
     yield steemConnectAPI.vote(myAccount.username, content.author, content.permlink, weight);
 
-    // For transaction tracking
-    // REF: https://steemit.com/steemapps/@therealwolf/steem-apps-update-4-more-data
-    steemConnectAPI.broadcast([['custom_json', { // async
-      required_auths: [],
-      required_posting_auths: [myAccount.username],
-      id: 'vote',
-      json: JSON.stringify({
-        account: myAccount.username,
-        author: content.author,
-        permlink: content.permlink,
-        weight: weight,
-        app: 'steemhunt'
-      })
-    }]]);
-
     // UPDATE PAYOUT
     const { author, permlink } = content;
     const updatedContent = yield steem.api.getContentAsync(author, permlink);

@@ -8,7 +8,6 @@ import { selectAppProps, selectAppRate, selectAppRewardFund } from 'features/App
 import { voteBegin } from './actions/vote';
 import { hasVoted, calculateVotingValue } from 'utils/helpers/steemitHelpers';
 import { formatAmount, formatNumber } from 'utils/helpers/steemitHelpers';
-import { getLoginURL } from 'utils/token';
 
 class VoteButton extends PureComponent {
   static propTypes = {
@@ -37,7 +36,7 @@ class VoteButton extends PureComponent {
       message: 'Login Required',
       description:
         <div>
-          Please <a href={getLoginURL()}>Login</a>
+          Please <a href="/sign-in">Login</a>
           &nbsp;or&nbsp;
           <a
             href="/sign-up"

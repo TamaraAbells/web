@@ -21,9 +21,9 @@ import 'react-phone-input-2/dist/style.css'
 const FormItem = Form.Item;
 const PIN_VALID_SECONDS = 180
 
-class SignUp extends Component {
+class SignIn extends Component {
   state = {
-    pageTitle: 'Create Account',
+    pageTitle: 'Login to Steemhunt',
     stage: 0,
     accountCheck: null,
     accountCheckMsg: null,
@@ -225,155 +225,9 @@ class SignUp extends Component {
                 </Button>
               </div>
             </Form>
-            <p className="form-tail">
-              Do you already have an account?<br />
-              <a href="/sign-in" className="action less-margin" alt="Sign In">
-                Sign In
-              </a>
-            </p>
           </div>
         )
         break;
-      case 1:
-        form = (
-          <div key={1} className="form-container">
-            <img src={smsImage} alt="SMS Send" />
-            <p>
-              Enter your phone number.
-              We will send you a text message with a verification code that you’ll need to enter on the next screen.
-            </p>
-            <Form onSubmit={this.sendSms}>
-              <FormItem>
-                <ReactPhoneInput inputStyle={{height: 40, width: '100%'}} defaultCountry={'us'} value={this.state.phoneNumber} onChange={this.setPhoneNumber} inputExtraProps={{ autoFocus: true }} />
-              </FormItem>
-              <div className="actions-container">
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  disabled={!this.state.phoneCheck}
-                  onClick={() => window.gtag('event', 'signup_process', { 'event_category' : 'signup', 'event_label' : 'Send SMS' })}
-                  block
-                >
-                  Send SMS
-                </Button>
-                <p className="form-tail">
-                  <span type="ghost" onClick={() => this.moveStage(-1)} className="fake-link"><Icon type="left" /> Back</span>
-                </p>
-              </div>
-            </Form>
-          </div>
-        )
-        break;
-        case 2:
-          form = (
-            <div key={2} className="form-container">
-              <img src={pinImage} alt="Pin Send" />
-              <p>
-              Enter the confirmation code.
-              We sent the code to {this.state.phoneNumber} vis SMS.
-              </p>
-              <Form onSubmit={this.verifyPin}>
-                <FormItem>
-                  <Input
-                    placeholder="Confirmation code (4 digits)"
-                    prefix={<Icon type="key" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    suffix={<span onClick={(e) => this.sendSms(e, true)} disabled={this.state.pinTimer !== null} className="fake-link">{this.state.pinTimer ? `Resend in ${this.state.pinTimer}s` : 'Resend'}</span>}
-                    value={this.state.pinNumber}
-                    onChange={this.setPinNumber}
-                    autoFocus
-                  />
-                </FormItem>
-                <div className="actions-container">
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    disabled={!this.state.pinCheck}
-                    onClick={() => window.gtag('event', 'signup_process', { 'event_category' : 'signup', 'event_label' : 'Verify PIN' })}
-                    block
-                  >
-                    Verify PIN
-                  </Button>
-                  <p className="form-tail">
-                    <span type="ghost" onClick={() => this.moveStage(-1)} className="fake-link"><Icon type="left" /> Back</span>
-                  </p>
-                </div>
-              </Form>
-            </div>
-          )
-        break;
-      case 3:
-        form = (
-          <div key={3} className="form-container">
-            <img src={verifiedImage} alt="Pin Verified" />
-            <p>
-              Thank you @{this.state.accountName} <br/>
-              Your phone number has been verified.
-            </p>
-            <div className="actions-container">
-              <Form onSubmit={(e) => this.createPrivateKeys(e)}>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  disabled={!this.state.pinCheck}
-                  onClick={() => window.gtag('event', 'signup_process', { 'event_category' : 'signup', 'event_label' : 'Phone Verified' })}
-                  block
-                >
-                  Continue
-                </Button>
-              </Form>
-            </div>
-          </div>
-        )
-        break;
-      case 4:
-        form = (
-          <div key={4} className="form-container">
-            <img src={keyImage} alt="Pin Verified" />
-            <p>
-              This is the private key (passwords) of your Steem account (<span className="pink">{this.state.accountName}</span>).<br/>
-              Please keep it secured.
-            </p>
-            <div className="private-key-container">
-              {this.state.privateKey}
-            </div>
-            <div className="actions-container">
-              <CopyToClipboard text={this.state.privateKey} onCopy={() => notification['success']({ message: 'Your private key has been copied to your clipboard.' })}>
-                <Button type="primary" ghost block>Copy the key</Button>
-              </CopyToClipboard>
-              <Button
-                type="primary"
-                onClick={() => {
-                  this.setModalVisible(true);
-                  window.gtag('event', 'signup_process', { 'event_category' : 'signup', 'event_label' : 'Last confirmation' });
-                }}
-                block
-              >
-                Continue
-              </Button>
-            </div>
-          </div>
-        )
-        break;
-      case 5:
-        form = (
-          <div key={5} className="form-container">
-            <p>
-              Now you can use Steemhunt and other Steem apps via SteemConnect, a secure way to login without giving up your private keys (password).
-            </p>
-            <img className="full-width" src={steemImage} alt="All Done" />
-
-            <div className="actions-container">
-              <Button type="primary" block onClick={() => window.location = "/sign-in"}>Login Now</Button>
-            </div>
-            <p className="form-tail">
-              <a href="/" className="action less-margin" alt="Go to main page">
-                Go to main page
-              </a>
-            </p>
-          </div>
-        )
-        break;
-      default:
     }
     return form;
   }
@@ -428,4 +282,4 @@ class SignUp extends Component {
   }
 }
 
-export default withRouter(Form.create()(SignUp));
+export default withRouter(Form.create()(SignIn));

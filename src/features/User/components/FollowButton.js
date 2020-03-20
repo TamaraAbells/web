@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Button, notification } from 'antd';
-import { getLoginURL } from 'utils/token';
 import { selectMe, selectMyFollowingsList, selectMyFollowingsLoadStatus, selectIsLoading } from '../selectors';
 import { followBegin } from '../actions/follow';
 import { unfollowBegin } from '../actions/unfollow';
@@ -24,7 +23,7 @@ class FollowButton extends PureComponent {
       message: 'Login Required',
       description:
         <div>
-          Please <a href={getLoginURL()}>Login</a>
+          Please <a href="/sign-in">Login</a>
           &nbsp;or&nbsp;
           <a
             href="/sign-up"

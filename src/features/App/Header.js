@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { getLoginURL } from 'utils/token';
 import { Popover, Button, Spin, Input, Avatar } from 'antd';
 import {
   selectMe,
@@ -124,8 +123,15 @@ class Header extends Component {
 
         {!isLoading && !me &&
           <div className="pull-right">
-            <a href={getLoginURL('/post')} className="right-margin header-button smaller mobile-hidden">
-              <Button shape="circle" icon="plus" />
+            <a
+              href="/sign-in"
+              className="right-margin header-button smaller mobile-hidden"
+              onClick={() => window.gtag('event', 'signin_clicked', { 'event_category' : 'signin', 'event_label' : 'Mobile Header' })}
+            >
+              <Button
+                shape="circle"
+                icon="plus"
+              />
             </a>
             <Popover
               content={menu}
@@ -140,7 +146,13 @@ class Header extends Component {
               </span>
             </Popover>
 
-            <Button type="primary" href={getLoginURL()} ghost className="right-margin header-button smaller">Login</Button>
+            <Button
+              href="/sign-in"
+              onClick={() => window.gtag('event', 'signin_clicked', { 'event_category' : 'signin', 'event_label' : 'Header Button' })}
+              className="header-button smaller right-margin"
+            >
+              Login
+            </Button>
             <Button
               type="primary"
               href="/sign-up"

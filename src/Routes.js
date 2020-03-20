@@ -15,7 +15,6 @@ import Post from 'features/Post/Post';
 import PostForm from 'features/Post/PostForm';
 import Draft from 'features/Post/Draft';
 import NotFound from 'components/NotFound';
-import { getLoginURL } from 'utils/token';
 
 const Home = asyncComponent(() => import('pages/Home'));
 const Terms = asyncComponent(() => import('pages/Terms'));
@@ -34,7 +33,7 @@ const Airdrop = asyncComponent(() => import('pages/Airdrop'));
 const Wallet = asyncComponent(() => import('pages/Wallet'));
 const SignUpGuide = asyncComponent(() => import('pages/SignUpGuide'));
 const SignUp = asyncComponent(() => import('pages/SignUp'));
-
+const SignIn = asyncComponent(() => import('pages/SignIn'));
 
 const BackButton = withRouter(({ history }) => (
   <Icon
@@ -89,6 +88,7 @@ export class RoutesLeft extends Component {
           <Route path="/tag/:tag" exact component={RelatedTag} />
           <Route path="/tag/:tag/@:author/:permlink" exact component={Post} />
           <Route path="/sign-up" exact component={SignUpGuide} />
+          <Route path="/sign-in" exact component={Home} />
           <Route path='*' component={NotFound} />
         </Switch>
       </div>
@@ -148,7 +148,7 @@ class Right extends Component {
     }
 
     if (this.props.location.pathname === '/post' && !isLoading && !me) {
-      window.location = getLoginURL();
+      window.location = '/sign-in';
     }
 
     return (
@@ -169,6 +169,7 @@ class Right extends Component {
           <Route path="/bounties" exact component={me || isLoading ? Wallet : List} />
           <Route path="/airdrop" exact component={me || isLoading ? Wallet : List} />
           <Route path="/sign-up" exact component={SignUp} />
+          <Route path="/sign-in" exact component={SignIn} />
           <Route path='*' component={List} />
         </Switch>
       </div>

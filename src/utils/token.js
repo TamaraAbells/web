@@ -2,10 +2,10 @@ import steemConnectAPI from 'utils/steemConnectAPI';
 import { sha256 } from 'js-sha256';
 
 export function getToken() {
-  return window.safeStorage.getItem('access_token');
+  return window.safeStorage.getItem('posting_key');
 }
 export function getEncryptedToken() {
-  const accessToken = window.safeStorage.getItem('access_token');
+  const accessToken = window.safeStorage.getItem('posting_key');
 
   if (accessToken) {
     return sha256(accessToken);
@@ -14,10 +14,9 @@ export function getEncryptedToken() {
   }
 }
 export function setToken(token) {
-  return window.safeStorage.setItem('access_token', token);
+  return window.safeStorage.setItem('posting_key', token);
 }
 export function removeToken() {
-  return window.safeStorage.removeItem('access_token');
+  return window.safeStorage.removeItem('posting_key');
 }
-export const getLoginURL = (path = window.location.pathname) => steemConnectAPI.getLoginURL(path);
 

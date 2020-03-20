@@ -14,7 +14,6 @@ import {
   selectCommentsIsLoading
 } from 'features/Comment/selectors';
 import { getCachedImageHack } from 'features/Post/utils';
-import { getLoginURL } from 'utils/token';
 import { selectMe } from 'features/User/selectors';
 import { selectCurrentComments, selectCurrentPost, selectIsPostLoading } from './selectors';
 import { getPostBegin, setCurrentPostKey } from './actions/getPost';
@@ -134,7 +133,7 @@ class Post extends Component {
               >
                 Sign up now
               </Button>
-              <a href={getLoginURL()} className="signin-link">
+              <a href="/sign-in" className="signin-link">
                 Already have a Steem account?
               </a>
             </div>
