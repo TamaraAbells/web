@@ -72,6 +72,7 @@ Steemhunt is running a blacklist to maintain a fair community platform. If you c
 1. Leave comments multiple times with irrelevant content to receive Steemhunt's upvotes.
 2. Constantly plagiarise your content.
 3. Operate alt accounts to abuse any of the Steemhunt voting pool, ranking chart, or airdrop tokens.
+4. Cause a serious risk in Steem blockchain security and sustainability.
 
 Even if you are blacklisted, you can still use our platform (posting, upvoting, and commenting), however, you won't be able to get upvoted nor received airdrops by Steemhunt. We announce the blacklist via #blacklist channel in our [Discord Group](https://discord.gg/mWXpgks) You can also appeal via #blacklist-appeal channel if you think you did not commit any of the actions above.
 
