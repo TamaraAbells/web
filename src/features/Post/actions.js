@@ -9,7 +9,6 @@ import getPost, { getPostReducer } from './actions/getPost';
 import searchPost, { searchPostReducer } from './actions/searchPost';
 import publishContent, { publishContentReducer } from './actions/publishContent';
 import { updateDraftReducer } from './actions/updateDraft';
-import resteem, { resteemReducer } from './actions/resteem';
 import postReducer from 'features/Post/reducer';
 import postRefresh, { postRefreshReducer } from './actions/refreshPost';
 import { moderatePostManager, setModeratorManager, moderatePostReducer } from './actions/moderatePost';
@@ -64,7 +63,6 @@ export const reducer = (state = initialState, action) => combine(
     searchPostReducer,
     publishContentReducer,
     postReducer,
-    resteemReducer,
     postRefreshReducer,
     moderatePostReducer,
     getPostsByTagReducer,
@@ -81,7 +79,6 @@ export default [
   getPost,
   searchPost,
   publishContent,
-  resteem,
   postRefresh,
   moderatePostManager,
   setModeratorManager,

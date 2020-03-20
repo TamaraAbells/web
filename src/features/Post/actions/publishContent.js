@@ -6,9 +6,10 @@ import { selectMyAccount } from 'features/User/selectors';
 import { selectDraft } from '../selectors';
 import { notification } from 'antd';
 import { getPostKey, getPostPath } from 'features/Post/utils';
-import steemConnectAPI from 'utils/steemConnectAPI';
+import { getToken } from 'utils/token';
 import { initialState } from '../actions';
 import { extractErrorMessage } from 'utils/errorMessage';
+import steem from 'steem';
 
 /*--------- CONSTANTS ---------*/
 const MAIN_CATEGORY = 'steemhunt';
@@ -177,6 +178,7 @@ function* publishContent({ props, editMode }) {
     let operations = [
       ['comment',
         {
+          wif: getToken(),
           parent_author: '',
           parent_permlink: tags[0],
           author: newPost.author,
@@ -209,6 +211,7 @@ function* publishContent({ props, editMode }) {
       });
 
       operations.push(['comment_options', {
+        wif: getToken(),
         author: newPost.author,
         permlink: newPost.permlink,
         max_accepted_payout: '1000000.000 SBD',
@@ -226,7 +229,7 @@ function* publishContent({ props, editMode }) {
 
     try {
       if (process.env.NODE_ENV === 'production') {
-        yield steemConnectAPI.broadcast(operations);
+        yield steem.broadcast(operations);
       }
     } catch (e) {
       // Delete post on Steemhunt as transaction failed

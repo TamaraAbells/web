@@ -22,7 +22,6 @@ import CommentReplyForm from 'features/Comment/CommentReplyForm';
 import { scrollTop } from 'utils/scroller';
 import NotFound from 'components/NotFound';
 import CircularProgress from 'components/CircularProgress';
-import ResteemButton from './components/ResteemButton';
 import { isPrerenderer } from 'utils/userAgent';
 import { titleize } from 'utils/helpers/stringHelpers';
 import removeMd from 'remove-markdown-and-html';
@@ -117,9 +116,6 @@ class Post extends Component {
               <span><Icon type="loading" /> comments</span>
             :
               <span>{post.children} comments</span>
-            }
-            { me && me !== post.author && !this.props.draft &&
-              <ResteemButton post={post} me={me} />
             }
           </h3>
 

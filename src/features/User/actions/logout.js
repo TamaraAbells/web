@@ -1,6 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { removeToken } from 'utils/token';
-import steemConnectAPI from 'utils/steemConnectAPI';
 
 /*--------- CONSTANTS ---------*/
 const LOGOUT_BEGIN = 'LOGOUT_BEGIN';
@@ -36,7 +35,6 @@ export function logoutReducer(state, action) {
 /*--------- SAGAS ---------*/
 function* logout() {
   try {
-    yield steemConnectAPI.revokeToken();
     removeToken();
     yield put(logoutSuccess());
   } catch(e) {

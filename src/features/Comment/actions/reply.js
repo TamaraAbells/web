@@ -4,12 +4,13 @@ import { notification } from 'antd';
 import { createCommentPermlink } from 'utils/helpers/steemitHelpers';
 import { selectMyAccount } from 'features/User/selectors';
 import { toCustomISOString } from'utils/date';
-import steemConnectAPI from 'utils/steemConnectAPI';
+import { getToken } from 'utils/token';
 import { postIncreaseCommentCount } from 'features/Post/actions/refreshPost';
 import { selectCurrentPost } from 'features/Post/selectors';
 import api from 'utils/api';
 import { extractErrorMessage } from 'utils/errorMessage';
 import { getPostKey } from 'features/Post/utils';
+import steem from 'steem';
 
 /*--------- CONSTANTS ---------*/
 const REPLY_BEGIN = 'REPLY_BEGIN';
@@ -134,7 +135,8 @@ function* reply({ parent, body, isModeratorComment }) {
       author_reputation: myAccount.reputation,
     };
 
-    yield steemConnectAPI.comment(
+    yield steem.broadcast.comment(
+      getToken(),
       parent.author,
       parent.permlink,
       myAccount.name,
@@ -172,7 +174,8 @@ function* editReply({ comment, body }) {
     } catch(e) {
       json_metadata = comment.json_metadata;
     }
-    yield steemConnectAPI.comment(
+    yield steem.broadcast.comment(
+      getToken(),
       comment.parent_author,
       comment.parent_permlink,
       comment.author,

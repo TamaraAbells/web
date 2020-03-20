@@ -8,12 +8,8 @@ import {
   selectMe,
   selectMyAccount,
   selectIsLoading,
-  selectMyFollowingsLoadStatus,
-  selectMyFollowingsList,
 } from 'features/User/selectors';
 import { selectSearchTerm } from 'features/Post/selectors';
-import { getFollowingsBegin } from 'features/User/actions/getFollowings';
-import { followBegin } from 'features/User/actions/follow';
 import { logoutBegin } from 'features/User/actions/logout';
 import { setSearchTerm } from 'features/Post/actions/searchPost';
 import logo from 'assets/images/logo-nav-pink@2x.png'
@@ -24,11 +20,7 @@ class Header extends Component {
     me: PropTypes.string.isRequired,
     isLoading: PropTypes.bool,
     myAccount: PropTypes.object.isRequired,
-    myFollowingsLoadStatus: PropTypes.object.isRequired,
-    myFollowingsList: PropTypes.array.isRequired,
-    follow: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
-    getFollowings: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
   };
 
@@ -36,12 +28,6 @@ class Header extends Component {
     menuVisible: false,
     searchVisible: false,
   };
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.me !== nextProps.me) {
-      this.props.getFollowings(nextProps.me);
-    }
-  }
 
   changeVisibility = (visible) => this.setState({ menuVisible: visible });
 
@@ -67,18 +53,11 @@ class Header extends Component {
   };
 
   render() {
-    const { me, myAccount, myFollowingsList, myFollowingsLoadStatus, isLoading, follow, searchTerm } = this.props;
-    let isFollowing = true;
-    if (myFollowingsList && myFollowingsList.length > 0) {
-      isFollowing = myFollowingsList.find(following => following && following.following === 'steemhunt');
-    }
+    const { me, myAccount, isLoading, follow, searchTerm } = this.props;
     const searchBarHidden = (this.props.path === '/wallet' || this.props.path === '/post');
     const menu = (
       <MenuContent
         me={me}
-        follow={follow}
-        isFollowing={isFollowing}
-        isFollowLoading={isLoading || myFollowingsLoadStatus['steemhunt']}
         myAccount={myAccount}
         changeVisibility={this.changeVisibility}
         logout={this.props.logout}
@@ -198,15 +177,11 @@ const mapStateToProps = createStructuredSelector({
   me: selectMe(),
   isLoading: selectIsLoading(),
   myAccount: selectMyAccount(),
-  myFollowingsLoadStatus: selectMyFollowingsLoadStatus(),
-  myFollowingsList: selectMyFollowingsList(),
   searchTerm: selectSearchTerm(),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  follow: () => dispatch(followBegin('steemhunt')),
   logout: () => dispatch(logoutBegin()),
-  getFollowings: me => dispatch(getFollowingsBegin(me)),
   setSearchTerm: (term) => dispatch(setSearchTerm(term)),
 });
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import UserSteemPower from 'features/User/components/UserSteemPower';
 import UserEstimatedValue from 'features/User/components/UserEstimatedValue';
 import FollowerCount from 'features/User/components/FollowerCount';
-import FollowButton from 'features/User/components/FollowButton';
 import LevelBar from 'features/User/components/LevelBar';
 import CircularProgress from 'components/CircularProgress';
 import { COLOR_PRIMARY, COLOR_LIGHT_GREY } from 'styles/constants';
@@ -79,18 +78,8 @@ export default class ProfileView extends Component {
           </Helmet>
         }
         <div className="top-container primary-gradient" style={coverStyle}>
-          {(me === account.name && !onEditing) &&
-            <div className="edit-buttons">
-              <Link to={`/author/@${me}/edit`}>
-                <Button icon="edit" size="small" ghost>Edit</Button>
-              </Link>
-            </div>
-          }
           <h1>{profileName}</h1>
           <h2>{profileAbout}</h2>
-          {(me !== account.name && !onEditing) &&
-            <FollowButton accountName={account.name} />
-          }
         </div>
         <div className="diagonal-line"></div>
         <div className="bottom-container">

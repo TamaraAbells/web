@@ -40,20 +40,11 @@ export default class MenuContent extends PureComponent {
   }
 
   render() {
-    const { me, myAccount, isFollowing, follow, isFollowLoading, changeVisibility, logout } = this.props;
+    const { me, myAccount, changeVisibility, logout } = this.props;
 
     if(me) {
       return (
         <Menu theme="dark">
-          {!isFollowing && me !== 'steemhunt' &&
-            <Menu.Item key="0">
-               <span onClick={follow}>
-                <Icon type={isFollowLoading ? 'loading' : 'star-o'} />
-                FOLLOW STEEMHUNT
-              </span>
-            </Menu.Item>
-          }
-
           <Menu.Item key="1">
             <a href="https://token.steemhunt.com" rel="noopener noreferrer" target="_blank">
               <Icon type="api" /> ABOUT HUNT PLATFORM

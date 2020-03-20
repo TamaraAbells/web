@@ -3,7 +3,6 @@ import update from 'immutability-helper';
 import { setToken } from 'utils/token';
 import { format } from '../utils';
 import { selectAppProps } from 'features/App/selectors';
-import steemConnectAPI from 'utils/steemConnectAPI';
 import steem from 'steem';
 import { getToken } from 'utils/token';
 import api from 'utils/api';
@@ -84,9 +83,8 @@ function* getMe({ token }) {
       yield put(getMeFailure('Not logged in'));
       return;
     }
-    steemConnectAPI.setAccessToken(token);
 
-    const me = yield steemConnectAPI.me();
+    const me = (yield steem.api.getAccounts('tabris'))[0]; // TODO: Get username from safeStorage
     const rcInfo = yield getRCInfo(me.user);
     const appProps = yield select(selectAppProps());
 
@@ -95,19 +93,6 @@ function* getMe({ token }) {
     // This is the only time sending non-encrypted token to the server (so server can validate users)
     // Make sure tokens must be filtered from all the logs and should not be saved in a raw format
     const info = yield api.post('/users.json', { user: { username: me.account.name, token: token } });
-
-    // For transaction tracking
-    // REF: https://steemit.com/steemapps/@therealwolf/steem-apps-update-4-more-data
-    steemConnectAPI.broadcast([['custom_json', { // async
-      required_auths: [],
-      required_posting_auths: [me.account.name],
-      id: 'sh_active_user',
-      json: JSON.stringify({
-        account: me.account.name,
-        user_score: info.detailed_user_score,
-        app: 'steemhunt'
-      })
-    }]]);
 
     yield put(getMeSuccess({
       ...me,
@@ -130,7 +115,7 @@ function* refreshMe() {
   }
 
   try {
-    const me = yield steemConnectAPI.me();
+    const me = (yield steem.api.getAccounts('tabris'))[0]; // TODO: Get username from safeStorage
     const rcInfo = yield getRCInfo(me.user);
     const appProps = yield select(selectAppProps());
 

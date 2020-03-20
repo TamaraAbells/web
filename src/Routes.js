@@ -23,7 +23,6 @@ const Cookies = asyncComponent(() => import('pages/Cookies'));
 const HuntedList = asyncComponent(() => import('pages/HuntedList'));
 const Profile = asyncComponent(() => import('pages/Profile'));
 const ProfileDraft = asyncComponent(() => import('pages/ProfileDraft'));
-const ProfileForm = asyncComponent(() => import('pages/ProfileForm'));
 const HuntedListByAuthor = asyncComponent(() => import('pages/HuntedListByAuthor'));
 const RelatedTag = asyncComponent(() => import('pages/RelatedTag'));
 const TagList = asyncComponent(() => import('pages/TagList'));
@@ -82,7 +81,6 @@ export class RoutesLeft extends Component {
           <Route path="/steemhunt/@:author/:permlink" exact render={(p) => (<Redirect to={`/@${p.match.params.author}/${p.match.params.permlink}`}/>)}/>
           <Route path="/@:author/:permlink/edit" exact component={Draft} />
           <Route path="/author/@:author" exact component={Profile} />
-          <Route path="/author/@:author/edit" exact component={ProfileDraft} />
           <Route path="/author/@:author/:permlink" exact component={Post} />
           <Route path="/@:author" exact render={(p) => (<Redirect to={`/author/@${p.match.params.author}`} />)} />
           <Route path="/tag/:tag" exact component={RelatedTag} />
@@ -162,7 +160,6 @@ class Right extends Component {
           <Route path="/hall-of-fame" component={TopList} />
           <Route path="/@:author/:permlink/edit" exact component={PostForm} />
           <Route path="/@:author/:permlink" exact component={List} />
-          <Route path="/author/@:author/edit" component={ProfileForm} />
           <Route path="/author/@:author" component={AuthorList} />
           <Route path="/tag/:tag" component={TagRight} />
           <Route path="/wallet" exact component={Wallet} />

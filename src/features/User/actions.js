@@ -9,8 +9,6 @@ import getFollowings, { getFollowingsReducer } from './actions/getFollowings';
 import setCurrentUser, { setCurrentUserReducer } from './actions/setCurrentUser';
 import { updateProfileDraftReducer } from './actions/updateProfileDraft';
 import logout, { logoutReducer } from './actions/logout';
-import follow, { followReducer } from './actions/follow';
-import unfollow, { unfollowReducer } from './actions/unfollow';
 import usersReducer from './reducer';
 
 export const initialState = {
@@ -36,8 +34,6 @@ export const reducer = (state = initialState, action) => combine(
     getFollowingsReducer,
     logoutReducer,
     setCurrentUserReducer,
-    followReducer,
-    unfollowReducer,
     usersReducer,
     updateProfileDraftReducer,
   ],
@@ -54,6 +50,4 @@ export default [
   getFollowings,
   logout,
   setCurrentUser,
-  follow,
-  unfollow,
 ];

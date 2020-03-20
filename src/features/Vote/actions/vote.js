@@ -2,7 +2,7 @@ import { put, select, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import { notification } from 'antd';
 import { selectMyAccount } from 'features/User/selectors';
-import steemConnectAPI from 'utils/steemConnectAPI';
+import { getToken } from 'utils/token';
 import { postRefreshBegin } from 'features/Post/actions/refreshPost';
 import { refreshMeBegin } from 'features/User/actions/getMe';
 import { extractErrorMessage } from 'utils/errorMessage';
@@ -37,7 +37,7 @@ function* vote({ content, weight, contentType }) {
   yield put(voteOptimistic(content, myAccount.username, weight, contentType));
 
   try {
-    yield steemConnectAPI.vote(myAccount.username, content.author, content.permlink, weight);
+    yield steem.broadcast.vote(getToken(), myAccount.username, content.author, content.permlink, weight);
 
     // UPDATE PAYOUT
     const { author, permlink } = content;

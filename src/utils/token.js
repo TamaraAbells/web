@@ -1,4 +1,3 @@
-import steemConnectAPI from 'utils/steemConnectAPI';
 import { sha256 } from 'js-sha256';
 
 export function getToken() {
