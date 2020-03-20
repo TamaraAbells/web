@@ -84,7 +84,7 @@ function* getMe({ token }) {
     }
 
     const me = (yield steem.api.getAccountsAsync(['tabris']))[0]; // TODO: Get username from safeStorage
-    const rcInfo = yield getRCInfo(me.user);
+    const rcInfo = yield getRCInfo(me.name);
     const appProps = yield select(selectAppProps());
 
     setToken(token); // TODO: why? - is this necessary?
@@ -115,7 +115,7 @@ function* refreshMe() {
 
   try {
     const me = (yield steem.api.getAccountsAsync(['tabris']))[0]; // TODO: Get username from safeStorage
-    const rcInfo = yield getRCInfo(me.user);
+    const rcInfo = yield getRCInfo(me.name);
     const appProps = yield select(selectAppProps());
 
     yield put(getMeSuccess({
