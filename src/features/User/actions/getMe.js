@@ -86,11 +86,8 @@ function* getMe({ token }) {
 
     window.steem = steem;
 
-    const accounts = yield steem.api.getAccounts(['tabris']);
-    console.log('------------', accounts);
+    const me = (yield steem.api.getAccountsAsync(['tabris']))[0]; // TODO: Get username from safeStorage
 
-
-    const me = (yield steem.api.getAccounts(['tabris']))[0]; // TODO: Get username from safeStorage
     const rcInfo = yield getRCInfo(me.user);
     const appProps = yield select(selectAppProps());
 
@@ -98,11 +95,11 @@ function* getMe({ token }) {
 
     // This is the only time sending non-encrypted token to the server (so server can validate users)
     // Make sure tokens must be filtered from all the logs and should not be saved in a raw format
-    const info = yield api.post('/users.json', { user: { username: me.account.name, token: token } });
+    const info = yield api.post('/users.json', { user: { username: me.name, token: token } });
 
     yield put(getMeSuccess({
       ...me,
-      account: Object.assign({}, format(me.account, appProps), info, rcInfo),
+      account: Object.assign({}, format(me, appProps), info, rcInfo),
     }));
   } catch(e) {
     // removeToken();
@@ -121,13 +118,13 @@ function* refreshMe() {
   }
 
   try {
-    const me = (yield steem.api.getAccounts(['tabris']))[0]; // TODO: Get username from safeStorage
+    const me = (yield steem.api.getAccountsAsync(['tabris']))[0]; // TODO: Get username from safeStorage
     const rcInfo = yield getRCInfo(me.user);
     const appProps = yield select(selectAppProps());
 
     yield put(getMeSuccess({
       ...me,
-      account: Object.assign({}, format(me.account, appProps), rcInfo),
+      account: Object.assign({}, format(me, appProps), rcInfo),
     }));
   } catch(e) {
     console.error(e);
