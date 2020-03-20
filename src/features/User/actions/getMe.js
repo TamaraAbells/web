@@ -1,6 +1,6 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
 import update from 'immutability-helper';
-import { setToken, getToken, getUsername } from 'utils/token';
+import { getToken, getUsername } from 'utils/token';
 import { format } from '../utils';
 import { selectAppProps } from 'features/App/selectors';
 import steem from 'steem';
@@ -38,6 +38,8 @@ export function getMeReducer(state, action) {
       });
     }
     case GET_ME_SUCCESS: {
+      const { me } = action;
+
       return update(state, {
         isLoading: { $set: false },
         me: { $set: action.me.name },
@@ -87,8 +89,6 @@ function* getMe({ token, username }) {
     const rcInfo = yield getRCInfo(me.name);
     const appProps = yield select(selectAppProps());
 
-    setToken(token);
-
     // This is the only time sending non-encrypted token to the server (so server can validate users)
     // Make sure tokens must be filtered from all the logs and should not be saved in a raw format
     const info = yield api.post('/users.json', { user: { username: me.name, token: token } });
@@ -107,16 +107,18 @@ export function* getMeManager() {
 }
 
 function* refreshMe() {
-  if (!getToken()) {
+  const token = getToken();
+  const username = getUsername();
+  if (!token || !username) {
     return;
   }
 
   try {
-    const me = (yield steem.api.getAccountsAsync(['tabris']))[0]; // TODO: Get username from safeStorage
+    const me = (yield steem.api.getAccountsAsync([username]))[0]; // TODO: Get username from safeStorage
     const rcInfo = yield getRCInfo(me.name);
     const appProps = yield select(selectAppProps());
 
-    yield put(getMeSuccess(getMeSuccess(Object.assign({}, format(me, appProps), rcInfo))));
+    yield put(getMeSuccess(Object.assign({}, format(me, appProps), rcInfo)));
   } catch(e) {
     console.error(e);
   }

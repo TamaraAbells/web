@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
 import steemDapps from 'assets/images/sign-up/img-steem-apps@2x.png';
-import signUpLeft from 'assets/images/sign-up/img-stc-1@2x.png';
-import signUpRight from 'assets/images/sign-up/img-stc-2@2x.png';
 import steemWallet from 'assets/images/sign-up/img-st-wallet@2x.png';
 
 export default class SignUpGuide extends Component {

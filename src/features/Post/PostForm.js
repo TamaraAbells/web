@@ -468,7 +468,7 @@ class PostForm extends Component {
           })(
             <Input
               placeholder="Steemit"
-              maxLength="30"
+              maxLength={30}
               onChange={this.handleTitleChange} />
           )}
         </FormItem>
@@ -484,7 +484,7 @@ class PostForm extends Component {
           })(
             <Input
               placeholder="A social media where everyone gets paid for participation"
-              maxLength="60"
+              maxLength={60}
               onChange={this.handleTaglineChange}
             />
           )}
