@@ -17,7 +17,6 @@ class SignIn extends Component {
 
   login = e => {
     e.preventDefault();
-    console.log(this.state);
     steem.api.getAccounts([this.state.username], (err, result) => {
       if (err) {
         notification["error"]({ message: "Steem api failed to load." });

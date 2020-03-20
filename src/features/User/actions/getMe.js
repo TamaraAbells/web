@@ -1,6 +1,6 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
 import update from 'immutability-helper';
-import { setToken, getToken, getUsername, removeUsername, removeToken } from 'utils/token';
+import { setToken, getToken, getUsername } from 'utils/token';
 import { format } from '../utils';
 import { selectAppProps } from 'features/App/selectors';
 import steem from 'steem';
@@ -78,7 +78,6 @@ function* getMe({ token, username }) {
   try {
     token = token || getToken();
     username = username || getUsername();
-    console.log(token, username);
     if (!token || !username) {
       yield put(getMeFailure('Not logged in'));
       return;
@@ -94,13 +93,10 @@ function* getMe({ token, username }) {
     // Make sure tokens must be filtered from all the logs and should not be saved in a raw format
     const info = yield api.post('/users.json', { user: { username: me.name, token: token } });
 
-    yield put(getMeSuccess({
-      ...me,
-      account: Object.assign({}, format(me, appProps), info, rcInfo),
-    }));
+    yield put(getMeSuccess(Object.assign({}, format(me, appProps), info, rcInfo)));
   } catch(e) {
-    removeToken();
-    removeUsername();
+    // removeToken();
+    // removeUsername();
     console.error(e);
     yield put(getMeFailure(e.message));
   }
@@ -120,10 +116,7 @@ function* refreshMe() {
     const rcInfo = yield getRCInfo(me.name);
     const appProps = yield select(selectAppProps());
 
-    yield put(getMeSuccess({
-      ...me,
-      account: Object.assign({}, format(me, appProps), rcInfo),
-    }));
+    yield put(getMeSuccess(getMeSuccess(Object.assign({}, format(me, appProps), rcInfo))));
   } catch(e) {
     console.error(e);
   }
