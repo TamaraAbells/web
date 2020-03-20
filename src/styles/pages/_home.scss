@@ -20,7 +20,12 @@
   }
 
   .center-content {
-    padding: 4rem 1rem 0 1rem;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    transform: translateY(-50%);
     text-align: center;
     color: #fff;
 
@@ -36,8 +41,8 @@
     }
 
     h2 {
-      margin-top: 3.5rem;
-      margin-bottom: 3.5rem;
+      margin-top: 5rem;
+      margin-bottom: 5rem;
       font-size: 2.375rem;
       font-weight: normal;
 
@@ -56,136 +61,6 @@
       }
     }
 
-    .roadmaps {
-      font-size: 0.875rem;
-      width: 450px;
-      margin: 3.5rem auto 0 auto;
-      text-align: left;
-
-      @include responsive(mobile) {
-        width: 100%;
-      }
-
-      .bar-title {
-        border-bottom: 1px solid #fff;
-        margin-bottom: 1.2em;
-      }
-
-      .roadmap, .token-site {
-        color: #fff;
-        display: block;
-        border: 1px solid #fff;
-        border-radius: 10px;
-        margin: 10px auto;
-        transition: all 0.3s ease;
-        text-decoration: none;
-
-        &:hover, &:focus, &:active, &.active {
-          background-color: rgba(255, 255, 255, 0.4);
-        }
-      }
-
-      .roadmap, .token-site {
-        position: relative;
-        padding: 1.5rem;
-
-        @include responsive(mobile) {
-          padding: 1.5rem 1rem;
-        }
-
-        &:hover, &.live {
-          .img {
-            &.roadmap-1 {
-              background-image: url("assets/images/rh-logo-active@2x.png");
-            }
-
-             &.roadmap-2 {
-              background-image: url("assets/images/ih-logo-active@2x.png");
-            }
-          }
-        }
-
-        &.live {
-          background-color: #fff;
-
-          &:hover, &:focus, &:active, &.active {
-            background-color: rgba(255, 255, 255, 0.6);
-          }
-
-          h3 {
-            color: $primary;
-          }
-
-          p {
-            color: #707070;
-          }
-
-          .status {
-            color: #f5222d;
-            border: solid 1px #f5222d;
-          }
-        }
-
-        h3, p {
-          margin: 0 0 0 80px;
-          line-height: 1;
-
-          @include responsive(mobile) {
-            margin: 0 0 0 4.5rem;
-          }
-        }
-
-        h3 {
-          font-size: 1.125rem;
-          color: #fff;
-          margin-bottom: 0.2rem;
-        }
-
-        .img {
-          position: absolute;
-          left: 1.5rem;
-          top: 50%;
-          margin-top: -1.875rem;
-          width: 3.75rem;
-          height: 3.75rem;
-          background-size: 3.75rem 3.75rem;
-          background-repeat: no-repeat;
-
-          @include responsive(mobile) {
-            left: 1rem;
-          }
-
-          &.roadmap-1 {
-            background-image: url("assets/images/rh-logo-inactive@2x.png");
-          }
-          &.roadmap-2 {
-            background-image: url("assets/images/ih-logo-inactive@2x.png");
-          }
-        }
-        .status {
-          text-align: center;
-          float: right;
-          width: 100px;
-          margin-top: -1.78rem;
-          border-radius: 4px;
-          border: solid 1px #fff;
-
-          @include responsive(mobile) {
-            display: none;
-          }
-        }
-      } // .roadmap, .token-site
-
-      .token-site {
-        padding-top: 0.7rem;
-        padding-bottom: 0.7rem;
-      }
-
-      p {
-        margin: 1rem 0;
-      }
-    } // .roadmaps
-
     .notice {
       font-size: 0.75rem;
       padding: 0.8rem 0 1.2rem 0;
@@ -201,8 +76,7 @@
 
     // override .ant-btn
     .ant-btn {
-      margin-top: 3.5rem;
-      margin-bottom: 3.5rem;
+      margin-top: 10rem;
       transition: all 0.3s ease;
 
       &:hover, &:focus, &:active, &.active {

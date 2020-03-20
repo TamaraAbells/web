@@ -39,41 +39,13 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <div className="home-page primary-gradient">
+        <div className="home-page full-page primary-gradient">
           <div className="center-content">
             <img src={imgLogo} alt="Steemhunt Logo" className="main-logo" />
             <h1>STEEMHUNT</h1>
             <h2>Discover Cool Products<br/>Get Rewards</h2>
 
-            <div className="roadmaps">
-              <div className="bar-title">
-                <span>HUNT TOKEN ECONOMY</span>
-              </div>
-              <a href="https://review.hunt.town" target="_blank" rel="noopener noreferrer" className="roadmap live">
-                <div className="img roadmap-1"></div>
-                <h3>REVIEWHUNT</h3>
-                <p>Launching hub for makers</p>
-                <div className="status">LIVE NOW</div>
-              </a>
-              <div className="roadmap">
-                <div className="img roadmap-2"></div>
-                <h3>IDEAHUNT</h3>
-                <p>Crowdfunding by NFT</p>
-                <div className="status">TBD</div>
-              </div>
-              <a href="https://token.hunt.town" target="_blank" rel="noopener noreferrer" className="token-site">
-                What is HUNT Platform? <Icon type="right-circle" />
-              </a>
-
-               <div className="notice">
-                [NOTICE]<br/>
-                <a href="https://steemit.com/reviewhunt/@steemhunt/get-constantly-paid-to-invite-new-hunters-and-makers-reviewhunt" target="_blank"  rel="noopener noreferrer">
-                  Get Constantly Paid to Invite New Hunters and Makers to Reviewhunt
-                </a>
-              </div>
-            </div>
-
-             <Button shape="circle" size="large" ghost={true} icon="down" onClick={this.scrollNext} />
+             <Button size="large" ghost={true} className="round-border padded-button learn-more" onClick={this.scrollNext}>Learn More</Button>
           </div>
         </div>
 
