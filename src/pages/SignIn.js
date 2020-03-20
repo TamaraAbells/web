@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
+import { createStructuredSelector } from 'reselect';
 import { Form, Input, Icon, Button, notification } from "antd";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import steem from "steem";
 import userImage from "assets/images/sign-up/icon-create-account@2x.png";
+import { getMeBegin } from "features/User/actions/getMe";
+import { selectMe } from 'features/User/selectors';
 import { setToken, setUsername } from "utils/token";
 
 const FormItem = Form.Item;
@@ -13,7 +17,7 @@ class SignIn extends Component {
 
   login = e => {
     e.preventDefault();
-    this.setState({ loading: true });
+    console.log(this.state);
     steem.api.getAccounts([this.state.username], (err, result) => {
       if (err) {
         notification["error"]({ message: "Steem api failed to load." });
@@ -46,6 +50,7 @@ class SignIn extends Component {
       if (loginSuccess) {
         setUsername(this.state.username);
         setToken(this.state.password);
+        this.props.getMe(this.state.password, this.state.username);
       } else {
         notification["error"]({
           message: "Wrong username/password combination."
@@ -121,4 +126,18 @@ class SignIn extends Component {
   }
 }
 
-export default withRouter(Form.create()(SignIn));
+const mapStateToProps = (state, ownProps) =>
+  createStructuredSelector({
+    me: selectMe()
+  });
+
+const mapDispatchToProps = dispatch => ({
+  getMe: (token, username) => dispatch(getMeBegin(token, username))
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Form.create()(SignIn))
+);

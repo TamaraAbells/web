@@ -1,10 +1,9 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
 import update from 'immutability-helper';
-import { setToken } from 'utils/token';
+import { setToken, getToken, getUsername, removeUsername, removeToken } from 'utils/token';
 import { format } from '../utils';
 import { selectAppProps } from 'features/App/selectors';
 import steem from 'steem';
-import { getToken } from 'utils/token';
 import api from 'utils/api';
 
 /*--------- CONSTANTS ---------*/
@@ -14,8 +13,8 @@ const GET_ME_SUCCESS = 'GET_ME_SUCCESS';
 const GET_ME_FAILURE = 'GET_ME_FAILURE';
 
 /*--------- ACTIONS ---------*/
-export function getMeBegin(token) {
-  return { type: GET_ME_BEGIN, token };
+export function getMeBegin(token, username) {
+  return { type: GET_ME_BEGIN, token, username };
 }
 
 export function refreshMeBegin() {
@@ -43,7 +42,7 @@ export function getMeReducer(state, action) {
         isLoading: { $set: false },
         me: { $set: action.me.name },
         accounts: {
-          [action.me.name]: {$auto: { $merge: me }},
+          [action.me.name]: {$auto: { $merge: action.me }},
         },
       });
     }
@@ -75,19 +74,21 @@ function getRCInfo(account) {
 
 
 /*--------- SAGAS ---------*/
-function* getMe({ token }) {
+function* getMe({ token, username }) {
   try {
     token = token || getToken();
-    if (!token) {
+    username = username || getUsername();
+    console.log(token, username);
+    if (!token || !username) {
       yield put(getMeFailure('Not logged in'));
       return;
     }
 
-    const me = (yield steem.api.getAccountsAsync(['tabris']))[0]; // TODO: Get username from safeStorage
+    const me = (yield steem.api.getAccountsAsync([username]))[0]; // TODO: Get username from safeStorage
     const rcInfo = yield getRCInfo(me.name);
     const appProps = yield select(selectAppProps());
 
-    setToken(token); // TODO: why? - is this necessary?
+    setToken(token);
 
     // This is the only time sending non-encrypted token to the server (so server can validate users)
     // Make sure tokens must be filtered from all the logs and should not be saved in a raw format
@@ -98,7 +99,8 @@ function* getMe({ token }) {
       account: Object.assign({}, format(me, appProps), info, rcInfo),
     }));
   } catch(e) {
-    // removeToken();
+    removeToken();
+    removeUsername();
     console.error(e);
     yield put(getMeFailure(e.message));
   }

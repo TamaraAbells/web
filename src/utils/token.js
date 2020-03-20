@@ -3,6 +3,11 @@ import { sha256 } from 'js-sha256';
 export function getToken() {
   return window.safeStorage.getItem('posting_key');
 }
+
+export function getUsername() {
+  return window.safeStorage.getItem('username');
+}
+
 export function getEncryptedToken() {
   const accessToken = window.safeStorage.getItem('posting_key');
 
@@ -23,5 +28,9 @@ export function setToken(token) {
 
 export function removeToken() {
   return window.safeStorage.removeItem('posting_key');
+}
+
+export function removeUsername() {
+  return window.safeStorage.removeItem('username');
 }
 
