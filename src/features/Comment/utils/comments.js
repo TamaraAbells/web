@@ -16,7 +16,15 @@ export const getRootCommentsList = (content) => {
 };
 
 export const shouldCommentVisible = function(comment, postAuthor, me) {
-  const filteredAuthors = ['steemhunt', 'innerhive'];
+  // Hide spam comments from front-end
+  const filteredAuthors = [
+    // Steemhunt bot comments
+    'steemhunt',
+    // Hive spams
+    'innerhive', 'sirvotesalot', 'z8teyb289qav9z', 'ngc',
+    // Other spammers
+    'florianopolis'
+  ];
 
   let meta = null;
   try {
@@ -27,6 +35,10 @@ export const shouldCommentVisible = function(comment, postAuthor, me) {
   }
 
   if (filteredAuthors.includes(comment.author)) {
+    return false;
+  }
+
+  if (comment.body.match(/hive\.blog/)) { //Filter Hive spams
     return false;
   }
 
