@@ -1,5 +1,3 @@
-import { isModerator } from 'features/User/utils';
-
 export const getCommentsChildrenLists = (content) => {
   let listsById = {};
   Object.keys(content).forEach((commentKey) => {
@@ -15,24 +13,17 @@ export const getRootCommentsList = (content) => {
   });
 };
 
-export const shouldCommentVisible = function(comment, postAuthor, me) {
+export const shouldCommentVisible = function(comment) {
   // Hide spam comments from front-end
   const filteredAuthors = [
-    // Steemhunt bot comments
-    'steemhunt',
+    // Bot comments
+    'steemhunt', 'cheetah', 'artturtle', 'upvotebank',
     // Hive spams
     'innerhive', 'sirvotesalot', 'z8teyb289qav9z', 'ngc',
     // Other spammers
-    'florianopolis'
+    'florianopolis',
+    // Other bots
   ];
-
-  let meta = null;
-  try {
-    meta = JSON.parse(comment.json_metadata);
-  } catch(e) {}
-  if (meta && meta.verified_by === comment.author && isModerator(comment.author) && !isModerator(me) && postAuthor !== me) {
-    return false;
-  }
 
   if (filteredAuthors.includes(comment.author)) {
     return false;

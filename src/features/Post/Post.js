@@ -81,6 +81,8 @@ class Post extends Component {
       return <NotFound/>;
     }
 
+    const commentCount = (currentComments && currentComments.list.length) || 0;
+
     return (
       <div className="post-container" id="post-container">
         <Helmet>
@@ -115,7 +117,7 @@ class Post extends Component {
             {commentsIsLoading ?
               <span><Icon type="loading" /> comments</span>
             :
-              <span>{post.children} comments</span>
+              <span>{commentCount} comments</span>
             }
           </h3>
 
@@ -145,7 +147,7 @@ class Post extends Component {
             <List
               loading={commentsIsLoading}
               itemLayout="horizontal"
-              dataSource={currentComments  && currentComments.list}
+              dataSource={currentComments && currentComments.list}
               locale={{ emptyText: "No comments yet" }}
               renderItem={commentId => (
                 <CommentItem

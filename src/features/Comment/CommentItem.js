@@ -14,7 +14,6 @@ import { selectMe, selectMyAccount } from 'features/User/selectors';
 import { isEditable } from 'features/Post/utils';
 import { getRoleName, isModerator, getUserScore } from 'features/User/utils';
 import { decreaseCommentcount } from 'features/Post/reducer';
-import { shouldCommentVisible } from 'features/Comment/utils/comments';
 import { updateComment } from 'features/Comment/actions/updateComment';
 import { getPostKey } from 'features/Post/utils';
 import api from 'utils/api';
@@ -96,13 +95,9 @@ class CommentItem extends PureComponent {
   }
 
   render() {
-    const { post, comment, commentsChild, commentsData, me } = this.props;
+    const { comment, commentsChild, commentsData, me } = this.props;
     const { showReplyForm, showEditForm } = this.state;
 
-    // Hide moderators' comments to normal users
-    if (!comment || !shouldCommentVisible(comment, post.author, me)) {
-      return null;
-    }
     const isDelisted = ((!isModerator(comment.author) && (comment.net_rshares < 0 || comment.author_reputation < 0)) || comment.is_delisted)
     const roleName = getRoleName(comment.author);
 

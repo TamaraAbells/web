@@ -8,6 +8,8 @@ import { selectPosts } from 'features/Post/selectors';
 import { hasUpdated } from 'features/Post/utils';
 import { postRefreshBegin, postRefreshSuccess } from 'features/Post/actions/refreshPost';
 import { calculateContentPayout } from 'utils/helpers/steemitHelpers';
+import { shouldCommentVisible } from 'features/Comment/utils/comments';
+import pickBy from 'lodash/pickBy';
 import api from 'utils/api';
 
 window.retried = 0;
@@ -65,6 +67,8 @@ function* getCommentsFromPost({ category, author, permlink }) {
   try {
     const state = yield steem.api.getStateAsync(`/${category}/@${author}/${permlink}`);
     const posts = yield select(selectPosts());
+
+    state.content = pickBy(state.content, (comment, key) => shouldCommentVisible(comment))
 
     const comments_votes = {};
     for(let comment of Object.values(state.content)) {
