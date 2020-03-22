@@ -68,7 +68,7 @@ function* getCommentsFromPost({ category, author, permlink }) {
     const state = yield steem.api.getStateAsync(`/${category}/@${author}/${permlink}`);
     const posts = yield select(selectPosts());
 
-    state.content = pickBy(state.content, (comment, key) => shouldCommentVisible(comment))
+    state.content = pickBy(state.content, (comment, key) => shouldCommentVisible(comment));
 
     const comments_votes = {};
     for(let comment of Object.values(state.content)) {

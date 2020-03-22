@@ -98,6 +98,10 @@ class CommentItem extends PureComponent {
     const { comment, commentsChild, commentsData, me } = this.props;
     const { showReplyForm, showEditForm } = this.state;
 
+    if (!comment) {
+      return null;
+    }
+
     const isDelisted = ((!isModerator(comment.author) && (comment.net_rshares < 0 || comment.author_reputation < 0)) || comment.is_delisted)
     const roleName = getRoleName(comment.author);
 
