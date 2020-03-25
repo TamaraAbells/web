@@ -196,35 +196,38 @@ function* publishContent({ props, editMode }) {
     }
 
     try {
-      // if (process.env.NODE_ENV === 'production') {
-        yield steem.broadcast.commentAsync(
-          getToken(),
-          '',
-          tags[0],
-          newPost.author,
-          newPost.permlink,
-          title,
-          getBody(newPost),
-          JSON.stringify(metadata),
-        )
+      let operations = [
+        ['comment',
+          {
+            parent_author: '',
+            parent_permlink: tags[0],
+            author: newPost.author,
+            permlink: newPost.permlink,
+            title,
+            body: getBody(newPost),
+            json_metadata: JSON.stringify(metadata),
+          },
+        ]
+      ];
 
-        if (!editMode) {
-          yield steem.broadcast.commentOptionsAsync(
-            getToken(),
-            newPost.author,
-            newPost.permlink,
-            '1000000.000 SBD',
-            10000,
-            true,
-            true,
-            [
-              [0, {
-                beneficiaries: beneficiaries
-              }]
-            ]
-          )
-        }
-      // }
+      if (!editMode) {
+        operations.push(['comment_options', {
+          author: newPost.author,
+          permlink: newPost.permlink,
+          max_accepted_payout: '1000000.000 SBD',
+          percent_steem_dollars: 10000,
+          allow_votes: true,
+          allow_curation_rewards: true,
+          extensions: [
+            [0, {
+              beneficiaries: beneficiaries
+            }]
+          ]
+        }]);
+      }
+
+
+      yield steem.broadcast.sendAsync({ extensions: [], operations: operations }, [getToken()]);
     } catch (e) {
       // Delete post on Steemhunt as transaction failed
       yield notification['error']({ message: extractErrorMessage(e) });
