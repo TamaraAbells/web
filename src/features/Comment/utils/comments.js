@@ -19,7 +19,7 @@ export const shouldCommentVisible = function(comment) {
     // Bot comments
     'steemhunt', 'cheetah', 'artturtle', 'upvotebank',
     // Hive spams
-    'innerhive', 'sirvotesalot', 'z8teyb289qav9z', 'ngc',
+    'innerhive', 'sirvotesalot', 'z8teyb289qav9z', 'ngc', 'xx0xx',
     // Other spammers
     'florianopolis',
     // Other bots
