@@ -98,13 +98,13 @@ export default class Airdrop extends Component {
           </p>
 
           <ul>
-            <li>@roelandp - 429,698.5 HUNT (Extracted: 192,044.53)</li>
-            <li>@ausbitbank - 94,282.39 HUNT</li>
-            <li>@stoodkev - 19,416.26 HUNT</li>
-            <li>@themarkymark - 18,140.26 HUNT</li>
-            <li>@therealwolf - 38,189.97 HUNT</li>
-            <li>@followbtcnews - 29,259.1 HUNT</li>
-            <li>@netuoso - 183,496.18 HUNT</li>
+            <li>@roelandp</li>
+            <li>@netuoso</li>
+            <li>@ausbitbank</li>
+            <li>@therealwolf</li>
+            <li>@followbtcnews</li>
+            <li>@stoodkev</li>
+            <li>@themarkymark</li>
           </ul>
 
           <p>
