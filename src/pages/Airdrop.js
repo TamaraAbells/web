@@ -94,7 +94,7 @@ export default class Airdrop extends Component {
         <div className="thin top-margin poll">
           <p>
             Steemhunt team is running a poll to determine whether the following accounts should remain on our blacklist.
-            Please read the full announcement <a href="https://steemit.com/@steemhunt" target="_blank" rel="noopener noreferrer">here</a>).
+            Please read the full announcement <a href="https://steemit.com/steemhunt/@steemhunt/community-poll-removing-blacklist" target="_blank" rel="noopener noreferrer">here</a>).
           </p>
 
           <ul>
