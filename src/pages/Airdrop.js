@@ -104,7 +104,7 @@ export default class Airdrop extends Component {
             <li>@therealwolf</li>
             <li>@followbtcnews</li>
             <li>@stoodkev</li>
-            <li>@themarkymark</li>
+            <li>@themarkymark (and his alt @buildawhale)</li>
           </ul>
 
           <p>
