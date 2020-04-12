@@ -13,7 +13,7 @@
   }
 
   .page-block {
-    margin-bottom: 90px;
+    margin-bottom: 70px;
 
     @include responsive(ipadpro) {
       margin-bottom: 45px;
@@ -78,6 +78,27 @@
         margin-top: 1.5rem;
       }
     }
+
+    .poll {
+      ul {
+        list-style: none;
+        margin-top: 1rem;
+        padding-left: 1rem;
+
+        &.selections {
+          line-height: 2;
+        }
+
+        input[type=radio] {
+          margin-right: 0.5em;
+        }
+      }
+      .result {
+        margin-top: 1rem;
+        color: $primary;
+      }
+    }
+
     .round-progress {
       display: inline-flex;
       flex-direction: column;

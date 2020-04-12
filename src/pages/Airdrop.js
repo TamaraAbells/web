@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Icon, Progress } from 'antd';
+import { Icon, Progress, Button, notification } from 'antd';
 import imgHuntPlatform from 'assets/images/wallet/img-hunt-platform@2x.png';
 import { formatNumber, formatFloat } from "utils/helpers/steemitHelpers";
 import api from 'utils/api';
+import steem from 'steem';
+import { getToken } from 'utils/token';
 
 const BarProgress = ({ data, label, disabled, max }) => {
   return (
@@ -19,14 +21,47 @@ export default class Airdrop extends Component {
     this.state = {
       record_time: 0,
       total: 0,
-      airdrops: {}
+      airdrops: {},
+      polls: { stats: { 'Agree': 0, 'Disagree': 0 }, has_voted: false, my_stake: 0, username: null },
+      my_poll_selection: '',
+      isLoading: false,
     }
   }
 
   componentDidMount() {
-    api.get('/hunt_transactions/stats.json').then((res) => {
-      this.setState(res);
-    })
+    api.get('/hunt_transactions/stats.json').then((res) => this.setState({
+      record_time: res.record_time,
+      total: res.total,
+      airdrops: res.airdrops
+    }));
+
+    api.get('/polls/stats.json', null, true).then((res) => this.setState({ polls: res }));
+  }
+
+  submitPoll() {
+    const { my_poll_selection } = this.state;
+
+    this.setState({ isLoading: true });
+
+    // Post on SH
+    api.post('/polls.json', { selection: my_poll_selection }, true).then((res) => {
+      steem.broadcast.customJson(getToken(), [], [res.username], 'steemhunt-poll-1', JSON.stringify({
+        selection: my_poll_selection,
+        stake: res.my_stake,
+      }), (error, result) => {
+        if (error) {
+          notification['error']({ message: 'Failed to broadcast on Steem blockchain. Please try again later.' });
+          this.setState({ isLoading: false });
+          return;
+        }
+
+        this.setState({ polls: res, isLoading: false });
+        notification['success']({ message: 'Thank you for your participation!' });
+      });
+    }).catch((e) => {
+      notification['error']({ message: e.message });
+      this.setState({ isLoading: false });
+    });
   }
 
   renderStatus() {
@@ -47,6 +82,71 @@ export default class Airdrop extends Component {
     )
   }
 
+  renderPoll() {
+    const { polls } = this.state;
+    const { stats, has_voted } = polls;
+    const totalStake = Object.keys(stats).reduce((sum, key) => sum + parseFloat(stats[key]), 0);
+
+    return (
+      <div className="page-block">
+        <h2 className="bottom-line">Community Poll</h2>
+        <div className="thin">Period: April 13th, 00:00 - 17th, 23:59:59 KST, 2020</div>
+        <div className="thin top-margin poll">
+          <p>
+            Steemhunt team is running a poll to determine whether the following accounts should remain on our blacklist.
+            Please read the full announcement <a href="https://steemit.com/@steemhunt" target="_blank" rel="noopener noreferrer">here</a>).
+          </p>
+
+          <ul>
+            <li>@roelandp - 429,698.5 HUNT (Extracted: 192,044.53)</li>
+            <li>@ausbitbank - 94,282.39 HUNT</li>
+            <li>@stoodkev - 19,416.26 HUNT</li>
+            <li>@themarkymark - 18,140.26 HUNT</li>
+            <li>@therealwolf - 38,189.97 HUNT</li>
+            <li>@followbtcnews - 29,259.1 HUNT</li>
+            <li>@netuoso - 183,496.18 HUNT</li>
+          </ul>
+
+          <p>
+            The voting results are calculated based on the summation of all voted HUNT stakes (Steemhunt and external wallet balance).
+            The HUNT team members and users who have been blacklisted are not allowed to participate in the voting.
+            Your voting will be recorded on Steem blockchain by using custom_json transaction in order to maintain transparency.
+          </p>
+
+          {has_voted ?
+            <p>☑️ You have already participated in this poll.</p>
+          :
+            <div>
+              <p>
+                Please submit your opinion.
+              </p>
+
+              <ul className="selections">
+                <li><input name="selection" type="radio" onClick={() => this.setState({ my_poll_selection: 'Agree' })}/> I agree that the accounts listed above should be on the blacklist</li>
+                <li><input name="selection" type="radio" onClick={() => this.setState({ my_poll_selection: 'Disagree' })}/> I disagree and they should be removed from the blacklist</li>
+              </ul>
+
+              <div className="text-right">
+                <Button
+                  type="primary"
+                  className="submit-button"
+                  loading={this.state.isLoading}
+                  onClick={() => this.submitPoll()}>
+                  Submit
+                </Button>
+              </div>
+            </div>
+          }
+
+          <div className="result">Result</div>
+          {Object.keys(stats).map((key, i) => {
+            return <BarProgress key={i} data={stats[key]} label={key} max={totalStake} />;
+          })}
+        </div>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="contents-page">
@@ -56,8 +156,9 @@ export default class Airdrop extends Component {
             The most important KSF (Key Successful Factor) of the HUNT platform is to build the real user base and amplify our community activities, rather than just focusing on the future token values. So, we are running a unique way to distribute our tokens - ecosystem and community building bounties over 300 days.
           </div>
         </div>
+        {this.renderPoll()}
         <div className="page-block">
-          <h2 className="bottom-line">Swap &amp; Bounty Status</h2>
+          <h2 className="bottom-line">Bounty Distribution Status</h2>
           <div className="thin">as of {this.state.record_time}</div>
           <div className="thin">{this.renderStatus()}</div>
         </div>
