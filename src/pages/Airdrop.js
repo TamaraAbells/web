@@ -90,7 +90,7 @@ export default class Airdrop extends Component {
     return (
       <div className="page-block">
         <h2 className="bottom-line">Community Poll</h2>
-        <div className="thin">Period: April 13th, 00:00 - 17th, 23:59:59 KST, 2020</div>
+        <div className="thin">Period: April 12th, 21:00 KST - 17th, 21:00 KST, 2020</div>
         <div className="thin top-margin poll">
           <p>
             Steemhunt team is running a poll to determine whether the following accounts should remain on our blacklist.
