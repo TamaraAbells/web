@@ -5,6 +5,7 @@ import { formatNumber, formatFloat } from "utils/helpers/steemitHelpers";
 import api from 'utils/api';
 import steem from 'steem';
 import { getToken } from 'utils/token';
+import { longFormat } from 'utils/date';
 
 const BarProgress = ({ data, label, disabled, max }) => {
   return (
@@ -22,7 +23,7 @@ export default class Airdrop extends Component {
       record_time: 0,
       total: 0,
       airdrops: {},
-      polls: { stats: { 'Agree': 0, 'Disagree': 0 }, has_voted: false, my_stake: 0, username: null },
+      polls: { stats: { 'Agree': 0, 'Disagree': 0 }, has_voted: false, my_stake: 0, username: null, logs: [] },
       my_poll_selection: '',
       isLoading: false,
     }
@@ -142,6 +143,13 @@ export default class Airdrop extends Component {
           {Object.keys(stats).map((key, i) => {
             return <BarProgress key={i} data={stats[key]} label={key} max={totalStake} />;
           })}
+
+          <div className="result">Voting Logs</div>
+          <ul>
+            {polls.logs.map((poll, i) => {
+              return <li>@{poll.user.username} {poll.selection.toLowerCase()}d with stake {formatNumber(poll.stake_amount)} HUNT - {longFormat(poll.created_at)}</li>
+            })}
+          </ul>
         </div>
       </div>
     )
