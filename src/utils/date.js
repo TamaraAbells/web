@@ -90,8 +90,5 @@ export const shortFormat = function(dateString) {
 
 export const longFormat = function(dateString) {
   const date = moment(dateString);
-  if ((Date.now() - date.valueOf()) / 1000 < 86400) {
-    return date.fromNow();
-  }
   return date.format('YYYY-MM-DD HH:mm:ssZ');
 }

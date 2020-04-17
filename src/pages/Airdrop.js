@@ -144,7 +144,7 @@ export default class Airdrop extends Component {
             return <BarProgress key={i} data={stats[key]} label={key} max={totalStake} />;
           })}
 
-          <div className="result">Voting Logs</div>
+          <div className="result">Voting Logs ({polls.logs.length})</div>
           <ul>
             {polls.logs.map((poll, i) => {
               return <li>@{poll.user.username}, {poll.selection.toLowerCase()}, {formatNumber(poll.stake_amount)} HUNT, {longFormat(poll.created_at)}</li>
