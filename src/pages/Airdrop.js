@@ -23,7 +23,7 @@ export default class Airdrop extends Component {
       record_time: 0,
       total: 0,
       airdrops: {},
-      polls: { stats: { 'Agree': 0, 'Disagree': 0 }, has_voted: false, my_stake: 0, username: null, logs: [] },
+      polls: { stats: { 'Agree': 0, 'Disagree': 0 }, has_voted: false, my_stake: 0, username: null, logs: [], has_finished: false },
       my_poll_selection: '',
       isLoading: false,
     }
@@ -85,7 +85,7 @@ export default class Airdrop extends Component {
 
   renderPoll() {
     const { polls } = this.state;
-    const { stats, has_voted } = polls;
+    const { stats, has_voted, has_finished, logs } = polls;
     const totalStake = Object.keys(stats).reduce((sum, key) => sum + parseFloat(stats[key]), 0);
 
     return (
@@ -114,9 +114,13 @@ export default class Airdrop extends Component {
             Your voting will be recorded on Steem blockchain by using custom_json transaction in order to maintain transparency.
           </p>
 
-          {has_voted ?
-            <p>☑️ You have already participated in this poll.</p>
-          :
+          {has_finished &&
+            <p><span role="img">☑️</span> This community poll has finished.</p>
+          }
+          {has_voted &&
+            <p><span role="img">☑️</span> You have already participated in this poll.</p>
+          }
+          {!has_finished && !has_voted &&
             <div>
               <p>
                 Please submit your opinion.
@@ -144,9 +148,9 @@ export default class Airdrop extends Component {
             return <BarProgress key={i} data={stats[key]} label={key} max={totalStake} />;
           })}
 
-          <div className="result">Voting Logs ({polls.logs.length})</div>
+          <div className="result">Voting Logs ({logs.length})</div>
           <ul>
-            {polls.logs.map((poll, i) => {
+            {logs.map((poll, i) => {
               return <li>@{poll.user.username}, {poll.selection.toLowerCase()}, {formatNumber(poll.stake_amount)} HUNT, {longFormat(poll.created_at)}</li>
             })}
           </ul>
