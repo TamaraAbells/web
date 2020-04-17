@@ -93,5 +93,5 @@ export const longFormat = function(dateString) {
   if ((Date.now() - date.valueOf()) / 1000 < 86400) {
     return date.fromNow();
   }
-  return date.format('MMM Do, YYYY hh:mm:ss');
+  return date.format('YYYY-MM-DD HH:mm:ssZ');
 }

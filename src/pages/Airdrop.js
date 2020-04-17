@@ -147,7 +147,7 @@ export default class Airdrop extends Component {
           <div className="result">Voting Logs</div>
           <ul>
             {polls.logs.map((poll, i) => {
-              return <li>@{poll.user.username} {poll.selection.toLowerCase()}d with stake {formatNumber(poll.stake_amount)} HUNT - {longFormat(poll.created_at)}</li>
+              return <li>@{poll.user.username}, {poll.selection.toLowerCase()}, {formatNumber(poll.stake_amount)} HUNT, {longFormat(poll.created_at)}</li>
             })}
           </ul>
         </div>
