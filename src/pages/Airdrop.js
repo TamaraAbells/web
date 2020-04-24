@@ -168,7 +168,7 @@ export default class Airdrop extends Component {
             The most important KSF (Key Successful Factor) of the HUNT platform is to build the real user base and amplify our community activities, rather than just focusing on the future token values. So, we are running a unique way to distribute our tokens - ecosystem and community building bounties over 300 days.
           </div>
         </div>
-        {this.renderPoll()}
+        {/*this.renderPoll()*/}
         <div className="page-block">
           <h2 className="bottom-line">Bounty Distribution Status</h2>
           <div className="thin">as of {this.state.record_time}</div>
